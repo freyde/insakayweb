@@ -1,0 +1,56 @@
+.loader {
+    width: 100%;
+    height: 90%;
+    padding-top: 15%
+}
+
+.contents {
+    margin: 1rem;
+
+}
+
+.main-container {
+    padding: 1rem;
+}
+
+.operator-details {
+    padding: 1rem;
+    padding-top: .5rem;
+    width: 20rem;
+    border: inset 2px;
+    border-color: rgb(187, 187, 183);
+    border-radius: 10px;
+    margin-left: 1rem;
+    
+}
+
+.operation-details {
+    padding: 1rem;
+    padding-top: .5rem;
+    width: 20rem;
+    border: inset 2px;
+    border-color: rgb(187, 187, 183);
+    border-radius: 10px;
+    margin-left: 1rem;
+    
+}
+
+.operator-details-main {
+
+    margin-bottom: 4rem;
+}
+
+.operation-details-main {
+    margin-bottom: 1rem;
+}
+
+
+#map {
+    height: 400px;  /* The height is 400 pixels */
+    width: 50%;  /* The width is the width of the web page */
+}
+
+.dropdown-list {
+    width: 20%;
+    margin-bottom: 2rem; 
+}
