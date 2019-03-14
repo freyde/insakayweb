@@ -65,8 +65,6 @@
 
 <script type="text/javascript" src="{{URL::asset('js/firebase.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('js/routes.js')}}"></script>
-<script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGVpkWk3EEyRicdXwr9lI5OhRi9yEndds&callback=initMap">
-</script>
+
 </body>
 @stop

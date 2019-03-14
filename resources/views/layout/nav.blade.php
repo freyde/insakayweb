@@ -9,6 +9,8 @@
     <link rel="stylesheet" type="text/css" media="screen" href="{{URL::asset('css/sandstone.min.css')}}">
     <link rel="stylesheet" type="text/css" media="screen" href="{{URL::asset('css/loader.css')}}">
     <link rel="stylesheet" type="text/css" media="screen" href="{{URL::asset('css/custom.css')}}">
+    <link rel="stylesheet" href="{{URL::asset('leaflet/leaflet.css')}}" />
+    <script src="{{URL::asset('leaflet/leaflet.js')}}"></script>
     <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase.js"></script>
     <script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

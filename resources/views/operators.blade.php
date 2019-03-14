@@ -37,6 +37,9 @@
 
         <label class="col-form-label col-form-label-sm" for="inputSmall">Confirm Password</label>
         <input class="form-control form-control-sm" type="password" placeholder="Confirm Password" id="cpass"></input>
+
+        <label class="col-form-label col-form-label-sm" for="inputSmall">Management Key</label>
+        <input class="form-control form-control-sm" type="password" placeholder="Confirm Password" id="key"></input>
         
         <input type="hidden" name="_token" value="{{ Session::token() }}">
       </div>

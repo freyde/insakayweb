@@ -17,6 +17,7 @@ var ownerLastName = document.getElementById('lastName');
 var emailAdd = document.getElementById('email');
 var password = document.getElementById('pass');
 var cPassword = document.getElementById('cpass');
+var opKey = document.getElementById('key');
 
 addOpBtn.addEventListener('click', openAddOp);
 addOpClose.addEventListener('click', closeAddOp);
@@ -64,6 +65,7 @@ function saveToFirebase() {
         ownerLName : ownerLastName.value,
         emailAddress : email.value,
         pass : password.value,
+        key : opKey,
     }, 
     success:function(data) {
       window.location.href = "/admin/operators";

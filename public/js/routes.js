@@ -8,6 +8,14 @@ var addRouteBtn = document.getElementById('addRouteBtn');
 opt.addEventListener('change', checkRoutes);
 addRouteBtn.addEventListener('click', gotoAddRoute);
 
+var map = L.map('map');
+
+L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZnJleWRlIiwiYSI6ImNqdDZ3MGJlZDBqcWg0NG1zbWphMDBlZ2UifQ.uVop-nTgkAx-ZOpr9CEIqA', {
+    maxZoom: 18,
+    id: 'mapbox.streets',
+    // accessToken: ''
+}).addTo(map);
+
 function checkRoutes() {
     if(opt.value != null) {
         if(opt.value == "-Select Operator-") {
@@ -46,34 +54,41 @@ function inFlateMaps(route) {
     // The location of 
     var p1 = {lat: p1Lt, lng: p1Lng};
     var p2 = {lat: p2Lt, lng: p2Lng};
-    var center = {lat: (p1Lt+p2Lt)/2, lng: (p1Lng+p2Lng)/2};
+    var center = {lat: (p1.lat+p2.lat)/2, lng: (p1.lng+p2.lng)/2};
 
-    // The map 
-    var map = new google.maps.Map(
-        document.getElementById('map'),{
-            zoom: 10, 
-            center: center, 
-            zoomControl: false, 
-            scrollwheel: false, 
-            disableDoubleClickZoom: true
-    });
 
-    //The marker, positioned at 
-    var marker1 = new google.maps.Marker({
-        position: p1, 
-        map: map,
-    });
-    var marker2 = new google.maps.Marker({
-        position: p2, 
-        map: map,
-        title: 'PITX'
-    });
 
+    map.setView([center.lat, center.lng], 10);
+    var startPoint = L.marker([p1.lat, p1.lng]).addTo(map);
+    var endPoint = L.marker([p2.lat, p2.lng]).addTo(map);
 }
 
-function initMap() {
+//     // The map 
+//     var map = new google.maps.Map(
+//         document.getElementById('map'),{
+//             zoom: 10, 
+//             center: center, 
+//             zoomControl: false, 
+//             scrollwheel: false, 
+//             disableDoubleClickZoom: true
+//     });
+
+//     //The marker, positioned at 
+//     var marker1 = new google.maps.Marker({
+//         position: p1, 
+//         map: map,
+//     });
+//     var marker2 = new google.maps.Marker({
+//         position: p2, 
+//         map: map,
+//         title: 'PITX'
+//     });
+
+// }
+
+// function initMap() {
     
-}
+// }
 
 
 function gotoAddRoute() {

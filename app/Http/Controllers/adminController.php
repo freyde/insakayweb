@@ -47,6 +47,7 @@ class adminController extends Controller
         $lastName = $request['ownerLName'];
         $fullName = $request['fullName'];
         $shortName = $request['shortName'];
+        $key = $request['key'];
 
         $serviceAccount = ServiceAccount::fromJsonFile(__DIR__.'/insakay-198614-firebase-adminsdk-mrk72-6083723cf0.json');
         $firebase = (new Factory)
@@ -82,7 +83,8 @@ class adminController extends Controller
             'operatorID' => $UID,
             'operatorName' => $fullName,
             'shortName' => $shortName,
-            'uid' => $uid
+            'uid' => $uid,
+            'key' => $key,
         ]);
         
         $alert = response()->json(['success' => $uid]);
