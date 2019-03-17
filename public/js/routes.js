@@ -9,6 +9,11 @@ opt.addEventListener('change', checkRoutes);
 addRouteBtn.addEventListener('click', gotoAddRoute);
 
 var map = L.map('map');
+var startPoint;
+var endPoint;
+// var markers = L.markerClusterGroup();
+
+var mapMarkers = L.layerGroup().addTo(map);
 
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZnJleWRlIiwiYSI6ImNqdDZ3MGJlZDBqcWg0NG1zbWphMDBlZ2UifQ.uVop-nTgkAx-ZOpr9CEIqA', {
     maxZoom: 18,
@@ -56,40 +61,12 @@ function inFlateMaps(route) {
     var p2 = {lat: p2Lt, lng: p2Lng};
     var center = {lat: (p1.lat+p2.lat)/2, lng: (p1.lng+p2.lng)/2};
 
-
+    mapMarkers.clearLayers();
 
     map.setView([center.lat, center.lng], 10);
-    var startPoint = L.marker([p1.lat, p1.lng]).addTo(map);
-    var endPoint = L.marker([p2.lat, p2.lng]).addTo(map);
+    startPoint = L.marker([p1.lat, p1.lng]).addTo(mapMarkers);
+    endPoint = L.marker([p2.lat, p2.lng]).addTo(mapMarkers);
 }
-
-//     // The map 
-//     var map = new google.maps.Map(
-//         document.getElementById('map'),{
-//             zoom: 10, 
-//             center: center, 
-//             zoomControl: false, 
-//             scrollwheel: false, 
-//             disableDoubleClickZoom: true
-//     });
-
-//     //The marker, positioned at 
-//     var marker1 = new google.maps.Marker({
-//         position: p1, 
-//         map: map,
-//     });
-//     var marker2 = new google.maps.Marker({
-//         position: p2, 
-//         map: map,
-//         title: 'PITX'
-//     });
-
-// }
-
-// function initMap() {
-    
-// }
-
 
 function gotoAddRoute() {
     window.location.href = "/routes/addroute";
