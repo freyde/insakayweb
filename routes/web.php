@@ -24,7 +24,7 @@ Route::post('/addbus', 'firebaseController@addBus');
 //
 Route::get('/routes', 'firebaseController@displayRoutes');
 Route::get('/routes/addroute', 'firebaseController@viewAddRoute');
-// Route::post('/routes/addroutes', 'firebaseController@addRoute');
+Route::post('/routes/addroute/save', 'firebaseController@addRoute');
 Route::get('/routes/manage/{routeid}', 'firebaseController@manageRoute');
 Route::post('/routes/addlandmark', 'firebaseController@addLandmark');
 //

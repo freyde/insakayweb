@@ -1,3 +1,11 @@
+$.ajaxSetup({
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  }
+});
+var saveAll = document.getElementById('saveRoute');
+var cancelAll = document.getElementById('cancelAddRoute');
+
 
 var addRowBtn = document.getElementById('addRow');
 var table = document.getElementById('coverage');
@@ -18,9 +26,10 @@ var curID = "";
 var chosenCov = "";
 var covList = {coverageList : []};
 var circleList = {circleList : []};
+var centerList = {centerList : []};
 var mapMain = L.map('mapMain');
 var highlightLayerMapMain = L.layerGroup().addTo(mapMain);
-var layerMain = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZnJleWRlIiwiYSI6ImNqdDZ3MGJlZDBqcWg0NG1zbWphMDBlZ2UifQ.uVop-nTgkAx-ZOpr9CEIqA', {
+var layerMain = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZnJleWRlIiwiYSI6ImNqdDZ3MGJlZDBqcWg0NG1zbWphMDBlZ2UifQ.uVop-nTgkAx-ZOpr9CEIqA', {
     maxZoom: 18,
     id: 'mapbox.streets',
     accessToken: 'map-main-routes'
@@ -69,6 +78,7 @@ function addRow() {
     coverageInput.setAttribute("name", "coveInptBox");
     coverageInput.setAttribute("readonly", "true");
     coverageInput.setAttribute("placeholder", "Click to add coverage");
+    coverageInput.setAttribute("style", "width: 28rem");
     coverageInput.setAttribute("onClick", "showModal(this.id)")
     var deleteBtn = document.createElement("input");
     deleteBtn.setAttribute("id", rowcount);
@@ -90,11 +100,8 @@ function addRow() {
 function deleteRow(show) {
     var id = parseInt(show) + 1;
     var rowValue = document.getElementById("cov".concat(show));
-    console.log(circleList.circleList.length);
     for(var c = 0; c < circleList.circleList.length; c++) {
-      console.log(circleList.circleList[c].name);
       if(rowValue.value == circleList.circleList[c].name) {
-        console.log("success");
         highlightLayerMapMain.removeLayer(circleList.circleList[c].circle);
         delete circleList.circleList[c];
       }
@@ -105,11 +112,22 @@ function deleteRow(show) {
         tempArr['circleList'].push(circleList.circleList[d])
       }
     }
-
     circleList.circleList.pop();
     circleList.circleList = tempArr.circleList;
-    
-    console.log(tempArr);
+//---------------------------------------------------------------------------
+    for(var c = 0; c < covList.coverageList.length; c++) {
+      if(rowValue.value == covList.coverageList[c].name) {
+        delete covList.coverageList[c];
+      }
+    }
+    tempArr = { coverageList : []};
+    for(var d = 0; d < covList.coverageList.length; d++) {
+      if(covList.coverageList[d] != null) {
+        tempArr['coverageList'].push(covList.coverageList[d])
+      }
+    }
+    covList.coverageList.pop();
+    covList.coverageList = tempArr.coverageList;
 
     table.deleteRow(id);
     rowcount = rowcount - 1
@@ -128,7 +146,7 @@ function deleteRow(show) {
 }
 
 function showModal(addBoxID) {
-    var layerAdd = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZnJleWRlIiwiYSI6ImNqdDZ3MGJlZDBqcWg0NG1zbWphMDBlZ2UifQ.uVop-nTgkAx-ZOpr9CEIqA', {
+    var layerAdd = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZnJleWRlIiwiYSI6ImNqdDZ3MGJlZDBqcWg0NG1zbWphMDBlZ2UifQ.uVop-nTgkAx-ZOpr9CEIqA', {
     maxZoom: 18,
     id: 'mapbox.streets',
     // accessToken: 'map-add-routes'
@@ -149,7 +167,7 @@ searchButton.onclick = function() {
   var country = "PH"
   if(data != "") {
     $.ajax ({
-      url: "https://api.mapbox.com/geocoding/v5/mapbox.places/" + data + ".json?access_token=" + access_token + "&country=" + country +"&autocomplete=false&limit=10&types=place",
+      url: "https://api.mapbox.com/geocoding/v5/mapbox.places/" + data + ".json?access_token=" + access_token + "&country=" + country +"&autocomplete=false&limit=10&types=place,locality",
       type: "GET"
       ,success:function(data) {
           console.log(data);
@@ -185,7 +203,7 @@ searchButton.onclick = function() {
               color: 'red',
               fillColor: '#f03',
               fillOpacity: 0.5,
-              radius: 5000
+              radius: 3000
             }).addTo(highlightLayerMapAdd);
           }
         },error:function(data) {
@@ -200,12 +218,12 @@ searchButton.onclick = function() {
 function placeOnMap(id) {
   highlightLayerMapAdd.clearLayers();
   var center = [results[id].center[1], results[id].center[0]];
-  mapAdd.setView(center, 10)
+  mapAdd.setView(center, 13)
   L.circle(center, {
     color: 'red',
     fillColor: '#f03',
     fillOpacity: 0.5,
-    radius: 4000
+    radius: 2000
   }).addTo(highlightLayerMapAdd);
   chosenCov = {
     name : results[id].place_name,
@@ -225,12 +243,12 @@ addCov.onclick = function() {
         added = true;
     }
     if(!added) {
-      covList['coverageList'].push({[ chosenCov.name] : {name : chosenCov.name, coordinate : chosenCov.coordinate}});
+      covList['coverageList'].push({name : chosenCov.name, coordinate : chosenCov.coordinate});
       var circ = L.circle(chosenCov.coordinate, {
         color: 'red',
         fillColor: '#f03',
         fillOpacity: 0.5,
-        radius: 4000
+        radius: 2000
       }).addTo(highlightLayerMapMain);
       circleList['circleList'].push({name : chosenCov.name, circle: circ});
       console.log(circleList);
@@ -245,4 +263,28 @@ addCov.onclick = function() {
       alert("Coverage already added");
     }
   }
+  console.log(covList);
+}
+
+saveAll.onclick = function() {
+  var name = document.getElementById("routeName");
+  var list = covList.coverageList;
+  console.log(list);
+  $.ajax ({
+    url: "/routes/addroute/save",
+    type: "POST",
+    data: {
+      name : name.value,
+      list : list,
+    },
+    success:function(data) {
+        window.location.href = "/routes";
+    },error:function(data) {
+        alert(data.success);
+    }
+  });
+}
+
+cancelAll.onclick = function() {
+  window.location.href = "/routes";
 }

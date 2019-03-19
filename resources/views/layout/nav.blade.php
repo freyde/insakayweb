@@ -11,6 +11,9 @@
     <link rel="stylesheet" type="text/css" media="screen" href="{{URL::asset('css/custom.css')}}">
     <link rel="stylesheet" href="{{URL::asset('leaflet/leaflet.css')}}" />
 
+    <script src='https://api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
+
     <!-- <script src="https://npmcdn.com/leaflet-geometryutil"></script> -->
     <script src="{{URL::asset('leaflet/leaflet.js')}}"></script>
     

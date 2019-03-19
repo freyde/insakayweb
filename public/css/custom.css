@@ -94,3 +94,19 @@
     text-decoration: none;
     cursor: pointer;
   }
+
+  .navbar {
+    /* position: fixed; */
+    
+    width: 100%;
+  } 
+  /*
+  .navbar a {
+    float: left;
+    display: block;
+    text-align: center;
+  }
+  
+  .navbar a:hover {
+    background: #ddd;
+  } */

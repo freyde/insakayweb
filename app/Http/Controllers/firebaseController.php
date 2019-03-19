@@ -185,43 +185,35 @@ class firebaseController extends Controller {
     }
 
     function addRoute(Request $request) {
+
         $serviceAccount = ServiceAccount::fromJsonFile(__DIR__.'/insakay-198614-firebase-adminsdk-mrk72-6083723cf0.json');
         $firebase = (new Factory)
             ->withServiceAccount($serviceAccount)
             ->create();
         $database = $firebase->getDatabase();
 
-        $uid = $request['uid'];
-        $name = $request['name'];
-        $p1Name = $request['p1Name'];
-        $p1Lat = $request['p1Lat'];
-        $p1Long = $request['p1Long'];
-        $p2Name = $request['p2Name'];
-        $p2Lat = $request['p2Lat'];
-        $p2Long =  $request['p2Long'];
-        $operatorID = $database->getReference('users/'. $uid .'/info/operatorID')->getSnapshot()->getValue();
+        $uid = session()->get('uid');
+        $routeName = $request['name'];
+        $coverage = $request['list'];
 
+
+        $operatorID = $database->getReference('users/'. $uid .'/info/operatorID')->getSnapshot()->getValue();
         $a = $database->getReference('users/'. $uid .'/info/routeCount')->getSnapshot()->getValue();
         $newCount = $a + 1;
         $route = sprintf('%03d', $newCount);
         $rID = ($operatorID .'-'. $route);
-
         $database->getReference('users/'. $uid .'/info')->update([
             'routeCount' => $newCount,
         ]);
+            // print_r($request['list']);
         $database->getReference('users/'. $uid .'/routes')->push([
-            'routeName' => $name,
-            'point1Name' => $p1Name,
-            'point1Lat' => $p1Lat,
-            'point1Long' => $p1Long,
-            'point2Name' => $p2Name,
-            'point2Lat' => $p2Lat,
-            'point2Long' => $p2Long,
+            'routeName' => $routeName,
             'routeID' => $rID,
+            'coverage' => $coverage,
             'landmarkCount' => 0
         ]);
 
-        $alert = response()->json(['success' => 'Success!']);
+        $alert = response()->json(['success' => $coverage]);
         return $alert;
     }
 
@@ -242,7 +234,8 @@ class firebaseController extends Controller {
 
         $landmarks = $database->getReference('users/'. $uid .'//landmarks/'. $routeid)->getSnapshot()->getValue();
         // print_r($routes2);
-        return view('landmarks')->with('infos', $infos)->with('landmarks', $landmarks)->with('uid', $uid);
+        return view('manageRoute
+        ')->with('infos', $infos)->with('landmarks', $landmarks)->with('uid', $uid);
     }
 
     public function addLandmark(Request $request) {

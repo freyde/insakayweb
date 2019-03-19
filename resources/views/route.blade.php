@@ -9,47 +9,28 @@
   <li class="breadcrumb-item"><a href="#">Fare</a></li>
   <li class="breadcrumb-item"><a href="#">Reports</a></li>
 </ol>
-    <!--The div element for the map -->
-    <input id="count" value="{{ $count }}" type="hidden">
-<select id="routes" class="dropdown-list">
-  <option value="">-Select Route-</option>
-  @if($routes != null) 
-    @foreach($routes as $route)
-      <option value="{{ $route['routeName'] }}">{{ $route['routeName'] }}</option>
-    @endforeach
-</select>
 
 <input type="button" class="btn btn-success" value="Add Route" id="addRouteBtn">
-
-<br>
-  @foreach($routes as $route)
-    <input class="name" value="{{ $route['routeName'] }}" type="hidden">
-    <input id="{{ $route['routeName'] }}_p1Lat" value="{{ $route['point1Lat'] }}" type="hidden">
-    <input id="{{ $route['routeName'] }}_p1Long" value="{{ $route['point1Long'] }}" type="hidden">
-    <input id="{{ $route['routeName'] }}_p2Lat" value="{{ $route['point2Lat'] }}" type="hidden">
-    <input id="{{ $route['routeName'] }}_p2Long" value="{{ $route['point2Long'] }}" type="hidden">
-  @endforeach
-
-<div id="map" class="route-map-view" style="width: 60rem; margin-left:3rem"></div>
-
-  @foreach($routes as $route)
-  <div class="view" id="{{ $route['routeName'] }}" style="width: 60rem; margin-left: 3rem; display: none">
-    <table class="table table-hover">
+<br><br>
+<div class="view" id="" style="width: 60rem; margin-left: 3rem">
+<table class="table table-hover">
+@if($routes != null) 
+  
       <thead>
         <tr>
           <th>ID</th>
           <th>Name</th>
-          <th>EP-1</th>
-          <th>EP-2</th>
+          <th>Coverage Count</th>
           <th>Landmark Count</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
+      @foreach($routes as $route)
         <tr>
           <td>{{ $route['routeID'] }}</td>
           <td>{{ $route['routeName'] }}</td>
-          <td>{{ $route['point1Name'] }}</td>
-          <td>{{ $route['point2Name'] }}</td>
+          <td>{{ count($route['coverage']) }}</td>
           <td>{{ $route['landmarkCount'] }}</td>
           <td>
             <form action="{{URL::to('/routes/manage/'. $route['routeID'])}}" method="get">
@@ -57,10 +38,12 @@
             </form>
           </td>
         </tr>
+      @endforeach
       </tbody>
     </table>
   </div>
-  @endforeach
+@else
+  No Routes Found
 @endif
 
 <script type="text/javascript" src="{{URL::asset('js/firebase.js')}}"></script>

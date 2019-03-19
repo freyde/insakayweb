@@ -1,6 +1,5 @@
 @extends('layout.nav')
 @section('content')
-
 <ol class="breadcrumb">
 <h5>Welcome {{ $uid }} </h5>
   <li class="breadcrumb-item"><a href="/conductors">Conductors</a></li>
@@ -22,10 +21,10 @@
     <div style="width: 100%; height: 100%">
       <div style="float: left; width: 60%; padding: 1rem">
         <div style="height: 25rem">
-          <form action="#">
+          <!-- <form> -->
             <input class="form-control form-control-sm" type="text" placeholder="Search City or Municipality" id="searchbox" style="float: left; width: 80%"></input>
-            <input type="submit" value="Search" style="margin-left: 1rem" id="searchBtn">
-          </form>
+            <input type="button" value="Search" style="margin-left: 1rem" id="searchBtn">
+          <!-- </form> -->
           <table id="searchResult" style="width: 100%; margin-top: 1rem" class="table-hover">
             <tbody>
             </tbody>
@@ -50,7 +49,7 @@
 <!------------------------------------ LEFT DIV ---------------------------------------->
   <div style="width: 35rem; height: 35rem; border: solid; padding: 1rem; margin: 1rem; float: left">
     <label class="col-form-label col-form-label-sm" for="inputSmall">Route Name</label>
-    <input class="form-control form-control-sm" type="text" placeholder="" id=""></input>
+    <input class="form-control form-control-sm" type="text" placeholder="" id="routeName"></input>
     <hr>
     <label class="col-form-label col-form-label-sm" for="inputSmall">Coverage</label>
     <table id="coverage" >
@@ -72,8 +71,13 @@
     <div id="mapMain" style="background-color:gray ;width: 100%; height: 100%;"></div>
   </div>
 </div>
+<div align="right" style="margin-right:1rem; margin-bottom: 1rem">
 
-<script src="https://npmcdn.com/leaflet-geometryutil"></script>
+    <input type="button" class="btn btn-secondary" value="Cancel" id="cancelAddRoute"></input>
+    <input type="button" class="btn btn-success" value="Save Route" id="saveRoute"></input>
+
+</div>
+
 <script type="text/javascript" src="{{URL::asset('js/firebase.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('js/addroute.js')}}"></script>
 
