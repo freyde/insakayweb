@@ -29,6 +29,7 @@ Route::get('/routes/manage/{routeid}', 'firebaseController@manageRoute');
 Route::post('/routes/addlandmark', 'firebaseController@addLandmark');
 
 Route::get('/fare', 'firebaseController@viewFare');
+Route::get('/fare/manage/{routeid}', 'firebaseController@manageFare');
 //
 Route::get('/admin', 'firebaseController@adminHomemanager');
 Route::post('/verifyadmin', 'sessionController@adminsave');

@@ -283,9 +283,43 @@ class firebaseController extends Controller {
     }
 
     public function viewFare() {
+        $serviceAccount = ServiceAccount::fromJsonFile(__DIR__.'/insakay-198614-firebase-adminsdk-mrk72-6083723cf0.json');
+        $firebase = (new Factory)
+            ->withServiceAccount($serviceAccount)
+            ->create();
+        $database = $firebase->getDatabase();
 
-        print_r("asd");
-        return view('fare');
+        $uid = session()->get('uid');
+
+        $routes = $database->getReference('users/'. $uid .'/routes')->getSnapshot()->getValue();
+        // print_r($routes);
+        return view('fare')->with('routes', $routes)->with('uid', $uid);
+    }
+
+    public function manageFare($routeID) {
+        
+
+        $serviceAccount = ServiceAccount::fromJsonFile(__DIR__.'/insakay-198614-firebase-adminsdk-mrk72-6083723cf0.json');
+        $firebase = (new Factory)
+            ->withServiceAccount($serviceAccount)
+            ->create();
+        $database = $firebase->getDatabase();
+
+        $uid = session()->get('uid');
+
+        $routes = $database->getReference('users/'. $uid .'//fares/'. $routeID)->getSnapshot()->getValue();
+        if($routes != null) {
+            print_r("meron");
+        } else {
+            $routes = $database->getReference('users/'. $uid .'/routes')->getSnapshot()->getValue();
+            foreach($routes as $route) {
+                if($route['routeID'] == $routeID)
+                print_r($route);
+            }
+        }
+       
+
+        
     }
 }
 
