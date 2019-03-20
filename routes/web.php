@@ -27,6 +27,8 @@ Route::get('/routes/addroute', 'firebaseController@viewAddRoute');
 Route::post('/routes/addroute/save', 'firebaseController@addRoute');
 Route::get('/routes/manage/{routeid}', 'firebaseController@manageRoute');
 Route::post('/routes/addlandmark', 'firebaseController@addLandmark');
+
+Route::get('/fare', 'firebaseController@viewFare');
 //
 Route::get('/admin', 'firebaseController@adminHomemanager');
 Route::post('/verifyadmin', 'sessionController@adminsave');
@@ -36,6 +38,7 @@ Route::post('/admin/addoperator', 'adminController@addOperatorAccount');
 Route::get('/admin/manage/{operator}', 'adminController@displayOperator');
 
 Route::get('/routetest', 'firebaseController@index');
+
 
 
 

@@ -234,8 +234,7 @@ class firebaseController extends Controller {
 
         $landmarks = $database->getReference('users/'. $uid .'//landmarks/'. $routeid)->getSnapshot()->getValue();
         // print_r($routes2);
-        return view('manageRoute
-        ')->with('infos', $infos)->with('landmarks', $landmarks)->with('uid', $uid);
+        return view('manageRoute')->with('infos', $infos)->with('landmarks', $landmarks)->with('uid', $uid)->with('routeID', $routeid);
     }
 
     public function addLandmark(Request $request) {
@@ -248,9 +247,8 @@ class firebaseController extends Controller {
 
         $uid = session()->get('uid');
         $routeID = $request['routeID'];
-        $landmarkName = $request['name'];
-        $latitude = $request['lat'];
-        $longitude = $request['lng'];
+        $landmarkName = $request['landmarkName'];
+        $coordinate = $request['coordinate'];
         $coverage = $request['coverage'];
 
         $routes = $database->getReference('users/'. $uid .'/routes')->getSnapshot()->getValue();
@@ -266,8 +264,7 @@ class firebaseController extends Controller {
         $database->getReference('users/'. $uid .'//landmarks/'. $routeID)->push([
             'landmarkID' => $landmarkID,
             'landmarkName' => $landmarkName,
-            'latitude' => $latitude,
-            'longitude' => $longitude,
+            'coordinate' => $coordinate,
             'coverage' => $coverage,
         ]); 
         
@@ -283,6 +280,12 @@ class firebaseController extends Controller {
         }
     
         return $alert;
+    }
+
+    public function viewFare() {
+
+        print_r("asd");
+        return view('fare');
     }
 }
 

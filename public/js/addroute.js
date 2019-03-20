@@ -228,6 +228,7 @@ function placeOnMap(id) {
   chosenCov = {
     name : results[id].place_name,
     coordinate : center,
+    bbox : results[id].bbox
   };
   // console.log(center);
   // console.log(L.GeometryUtil.length([center, center]));
@@ -243,7 +244,9 @@ addCov.onclick = function() {
         added = true;
     }
     if(!added) {
-      covList['coverageList'].push({name : chosenCov.name, coordinate : chosenCov.coordinate});
+      covList['coverageList'].push({name : chosenCov.name,
+                                    coordinate : chosenCov.coordinate,
+                                    bbox: chosenCov.bbox});
       var circ = L.circle(chosenCov.coordinate, {
         color: 'red',
         fillColor: '#f03',

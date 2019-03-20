@@ -57,6 +57,9 @@
             <tr>
                 <td>{{ $landmark['landmarkID'] }}</td>
                 <td>{{ $landmark['landmarkName'] }}</td>
+                @foreach($landmark['coordinate'] as $coord)
+                <td>{{$coord}}</td>
+                @endforeach
                 <td>{{ $landmark['coverage'] }}</td>
             </tr>
             @endforeach
@@ -83,8 +86,8 @@
     </div>
 
     <div style="width: 100%; height: 100%">
-      <div style="float: left; width: 60%;">
-        <div style="height: 25rem">
+      <div style="float: left; width: 40%;">
+        <div style="height: 15rem">
           <!-- <form action="#">
             <input class="form-control form-control-sm" type="text" placeholder="Search City or Municipality" id="searchbox" style="float: left; width: 80%"></input>
             <input type="submit" value="Search" style="margin-left: 1rem" id="searchBtn">
@@ -96,23 +99,39 @@
               </tr>
             </thead>
             <tbody>
+            <input type="hidden" value="{{ $routeID }}" id="routeID">
+            <input type="hidden" value="{{ $uid }}" id="uid">
             @foreach($infos['coverage'] as $coverage)
               <tr>
-                <td onclick="coverageSelected(this.id)" id="{{$coverage['name']}}">{{ $coverage['name'] }}</td>
+                <td id="{{ $coverage['name'] }}" onclick="coverageSelected(this.id)">{{ $coverage['name']}}</td>
+                <!-- <input type="text" value="hahah"> -->
                 <input type="hidden" value="$coverage['name']">
               </tr>
             @endforeach
             </tbody>
           </table>
+          
+        </div>
+        <div>
+          <b>Landmark</b><br>
+          <div style="padding-right: 1rem">
+            <label class="col-form-label col-form-label-sm" for="inputSmall">Name</label>
+            <input class="form-control form-control-sm" type="text" placeholder="Landmark Name" id="lmarkName"></input>
+            <label class="col-form-label col-form-label-sm" for="inputSmall">Coordinate</label>
+            <input class="form-control form-control-sm" type="text" placeholder="Latitude" id="lmarkLat" readonly="true"></input>
+            <input class="form-control form-control-sm" type="text" placeholder="Longitude" id="lmarkLng" readonly="true"></input>
+            <br>
+            <button id="addLandClose" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button id="addLandmark" type="button" class="btn btn-primary">Add Landmark</button>
+          </div>
         </div>
       </div>
       <div style="width: 100%; height: 100%">
-        <div id="mapAddLandmark" style="background-color:gray; width: 40%; height: 30rem;"></div>
+        <div id="mapAddLandmark" style="background-color:gray; width: 60%; height: 30rem;"></div>
       </div>
     </div>
     <div class="modal-footer">
-      <button id="addLandmark" type="button" class="btn btn-primary">Add Landmark</button>
-      <button id="addLandClose" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+  
     </div>
   </div>
 </div>
