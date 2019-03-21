@@ -25,11 +25,13 @@ Route::post('/addbus', 'firebaseController@addBus');
 Route::get('/routes', 'firebaseController@displayRoutes');
 Route::get('/routes/addroute', 'firebaseController@viewAddRoute');
 Route::post('/routes/addroute/save', 'firebaseController@addRoute');
+Route::post('/routes/addendpoint', 'firebaseController@addEndPoint');
 Route::get('/routes/manage/{routeid}', 'firebaseController@manageRoute');
 Route::post('/routes/addlandmark', 'firebaseController@addLandmark');
 
 Route::get('/fare', 'firebaseController@viewFare');
 Route::get('/fare/manage/{routeid}', 'firebaseController@manageFare');
+Route::post('/fare/savematrix', 'firebaseController@saveFareMatrix');
 //
 Route::get('/admin', 'firebaseController@adminHomemanager');
 Route::post('/verifyadmin', 'sessionController@adminsave');

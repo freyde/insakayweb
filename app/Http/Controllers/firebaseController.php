@@ -210,7 +210,9 @@ class firebaseController extends Controller {
             'routeName' => $routeName,
             'routeID' => $rID,
             'coverage' => $coverage,
-            'landmarkCount' => 0
+            'landmarkCount' => 0,
+            'endPoint1' => "none",
+            'endPoint2' => "none",
         ]);
 
         $alert = response()->json(['success' => $coverage]);
@@ -235,6 +237,47 @@ class firebaseController extends Controller {
         $landmarks = $database->getReference('users/'. $uid .'//landmarks/'. $routeid)->getSnapshot()->getValue();
         // print_r($routes2);
         return view('manageRoute')->with('infos', $infos)->with('landmarks', $landmarks)->with('uid', $uid)->with('routeID', $routeid);
+    }
+
+    public function addEndPoint(Request $request) {
+        $alert = response()->json(['result' => 'Success!']);
+        $serviceAccount = ServiceAccount::fromJsonFile(__DIR__.'/insakay-198614-firebase-adminsdk-mrk72-6083723cf0.json');
+        $firebase = (new Factory)
+            ->withServiceAccount($serviceAccount)
+            ->create();
+        $database = $firebase->getDatabase();
+        $uid = session()->get('uid');
+
+        $type = $request['type'];
+        $name = $request['name'];
+        $routeID = $request['routeID'];
+
+        $routeKeys = $database->getReference('users/'. $uid .'/routes')->getChildKeys();
+        foreach($routeKeys as $key) {
+            $route = $database->getReference('users/'. $uid .'//routes/'. $key)->getSnapshot()->getValue();
+            if($route['routeID'] == $routeID) {
+                if($type == "ep1") {
+                    if($name != $route['endPoint2']) {
+                        $database->getReference('users/'. $uid .'//routes/'. $key)->update([
+                            'endPoint1' => $name,
+                        ]);
+                    } else {
+                        $alert = response()->json(['result' => 'Failed! Coverage already chosen as end point 2']);
+                    }
+                } 
+                else if($type == "ep2") {
+                    if($name != $route['endPoint1']) {
+                        $database->getReference('users/'. $uid .'//routes/'. $key)->update([
+                            'endPoint2' => $name,
+                        ]);
+                    } else {
+                        $alert = response()->json(['result' => 'Failed! Coverage already chosen as end point 1']);
+                    }
+                }
+                break;
+            }
+        }
+        return $alert;
     }
 
     public function addLandmark(Request $request) {
@@ -297,8 +340,6 @@ class firebaseController extends Controller {
     }
 
     public function manageFare($routeID) {
-        
-
         $serviceAccount = ServiceAccount::fromJsonFile(__DIR__.'/insakay-198614-firebase-adminsdk-mrk72-6083723cf0.json');
         $firebase = (new Factory)
             ->withServiceAccount($serviceAccount)
@@ -307,19 +348,44 @@ class firebaseController extends Controller {
 
         $uid = session()->get('uid');
 
-        $routes = $database->getReference('users/'. $uid .'//fares/'. $routeID)->getSnapshot()->getValue();
-        if($routes != null) {
-            print_r("meron");
-        } else {
-            $routes = $database->getReference('users/'. $uid .'/routes')->getSnapshot()->getValue();
-            foreach($routes as $route) {
-                if($route['routeID'] == $routeID)
-                print_r($route);
-            }
-        }
-       
+        $routes = $database->getReference('users/'. $uid .'/routes')->getSnapshot()->getValue();
 
-        
+        foreach($routes as $route) {
+            if($route['routeID'] == $routeID)
+                $routeInfos = $route;
+        }
+        $haveFare;
+        $fares = $database->getReference('users/'. $uid .'//fares/'. $routeID)->getSnapshot()->getValue();
+        if($fares != null) {
+            $haveFare = true;
+        } else {
+           $haveFare = false;
+        }
+
+        $rawKeys = $database->getReference('users/'. $uid .'//fares/'. $routeID ."/matrix")->getChildKeys();
+        $fareKeys = array();
+        foreach($rawKeys as $key) {
+            $a = explode(", ", $key);
+            $fareKeys[] = $a[0];
+        }
+        $d=0;
+        return view('manageFare')->with('infos', $routeInfos)->with('uid', $uid)->with('haveFare', $haveFare)->with('fares', $fares)->with('fareKeys', $fareKeys)->with('d', $d);
+    }
+
+    public function saveFareMatrix(Request $request) {
+        $serviceAccount = ServiceAccount::fromJsonFile(__DIR__.'/insakay-198614-firebase-adminsdk-mrk72-6083723cf0.json');
+        $firebase = (new Factory)
+            ->withServiceAccount($serviceAccount)
+            ->create();
+        $database = $firebase->getDatabase();
+
+        $uid = session()->get('uid');
+
+        $routeID = $request['routeID'];
+        $raw = $request['list'];
+        $database->getReference('users/'. $uid .'//fares/'. $routeID)->update([
+            'matrix' => $raw,
+        ]);
     }
 }
 

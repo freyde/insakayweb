@@ -23,6 +23,8 @@
             <th>Name</th>
             <th>Coverage Count</th>
             <th>Landmark Count</th>
+            <th>End Point 1</th>
+            <th>End Point 2</th>
             </tr>
         </thead>
         <tbody>
@@ -31,6 +33,20 @@
             <td>{{ $infos['routeName'] }}</td>
             <td>{{ count($infos['coverage']) }}</td>
             <td>{{ $infos['landmarkCount'] }}</td>
+            <td>
+              @if($infos['endPoint1'] == "none")
+                <input class="form-control form-control-sm" readonly="true" type="text" placeholder="Click to choose end point 1" id="ep1"></input>
+              @else
+                <input class="form-control form-control-sm" readonly="true" type="text" placeholder="Click to choose end point 1" id="ep1" value="{{ $infos['endPoint1'] }}"></input>
+              @endif
+            </td>
+            <td>
+              @if($infos['endPoint2'] == "none")
+                <input class="form-control form-control-sm" readonly="true" type="text" placeholder="Click to choose end point 2" id="ep2"></input>
+              @else
+              <input class="form-control form-control-sm" readonly="true" type="text" placeholder="Click to choose end point 1" id="ep2" value="{{ $infos['endPoint2'] }}"></input>
+              @endif
+            </td>
             </tr>
         </tbody>
     </table>
@@ -103,9 +119,7 @@
             <input type="hidden" value="{{ $uid }}" id="uid">
             @foreach($infos['coverage'] as $coverage)
               <tr>
-                <td id="{{ $coverage['name'] }}" onclick="coverageSelected(this.id)">{{ $coverage['name']}}</td>
-                <!-- <input type="text" value="hahah"> -->
-                <input type="hidden" value="$coverage['name']">
+                <td id="{{ $coverage['name'] }}" onclick="coverageSelected(this.id)" class="covContainer">{{ $coverage['name']}}</td>
               </tr>
             @endforeach
             </tbody>
@@ -137,6 +151,62 @@
 </div>
 
 <div id='map' style=" top:0; bottom:0; width:100%; }"></div>
+
+<div class="modal" id="ep1Modal">
+  <div class="modal-content" style="width: 35rem">
+    <div class="modal-header">
+      <h5 class="modal-title">End Point 1</h5>
+    </div>
+    <div class="modal-body">
+      <table id="coverageList" style="width: 100%;" class="table-hover">
+        <thead>
+          <tr>
+            <th>List of Coverage</th>
+          </tr>
+        </thead>
+        <tbody>
+      @foreach($infos['coverage'] as $coverage)
+        <tr>
+          <td id="ep1-{{ $coverage['name'] }}" onclick="ep1Selected(this.id)" class="ep1Cov">{{ $coverage['name']}}</td>
+        </tr>
+      @endforeach
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <button id="ep1ModalClose" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      <button id="ep1ModalDone" type="button" class="btn btn-primary">Done</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="ep2Modal">
+  <div class="modal-content" style="width: 35rem">
+    <div class="modal-header">
+      <h5 class="modal-title">End Point 2</h5>
+    </div>
+    <div class="modal-body">
+      <table id="coverageList" style="width: 100%;" class="table-hover">
+        <thead>
+          <tr>
+            <th>List of Coverage</th>
+          </tr>
+        </thead>
+        <tbody>
+      @foreach($infos['coverage'] as $coverage)
+        <tr>
+          <td id="ep2-{{ $coverage['name'] }}" onclick="ep2Selected(this.id)" class="ep2Cov">{{ $coverage['name']}}</td>
+        </tr>
+      @endforeach
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <button id="ep2ModalClose" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      <button id="ep2ModalDone" type="button" class="btn btn-primary">Done</button>
+    </div>
+  </div>
+</div>
 
 
 <script type="text/javascript" src="{{URL::asset('js/landmark.js')}}"></script>

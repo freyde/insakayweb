@@ -119,6 +119,11 @@ addLandBtn.onclick = function() {
 var selectedCovBbox;
 function coverageSelected(id) {
     // alert(cov.value);
+    var allContainer = document.getElementsByClassName("covContainer");
+    for(z = 0; z < allContainer.length; z++) {
+        allContainer[z].setAttribute('style', 'color: black');
+    }
+
     Object.values(coverages).forEach(function (cov) {
         if(id == cov.name) {
             mapAddLand.setView([cov.coordinate[0], cov.coordinate[1]], 14);
@@ -126,6 +131,8 @@ function coverageSelected(id) {
             curCovName = cov.name;
         }
     });
+    var a = document.getElementById(id);
+    a.setAttribute('style', 'color: green');
 }
 
 var listener = L.featureGroup().addTo(mapAddLand);
@@ -160,3 +167,101 @@ mapAddLand.on("click", function(event) {
     
     console.log(event.latlng);
 });
+var ep1Modal = document.getElementById('ep1Modal');
+var ep2Modal = document.getElementById('ep2Modal');
+var addEP1 = document.getElementById('ep1');
+var addEP2 = document.getElementById('ep2');
+var ep1Close = document.getElementById('ep1ModalClose');
+var ep2Close = document.getElementById('ep2ModalClose');
+var ep1Done = document.getElementById('ep1ModalDone');
+var ep2Done = document.getElementById('ep2ModalDone');
+
+addEP1.onclick = function() {
+    ep1Modal.style.display = "block";
+}
+
+addEP2.onclick = function() {
+    ep2Modal.style.display = "block";
+}
+
+ep1Close.onclick = function() {
+    ep1Modal.style.display = "none";
+}
+
+ep2Close.onclick = function() {
+    ep2Modal.style.display = "none";
+}
+
+window.onclick = function(e) {
+    if(e.target == ep1Modal){
+        ep1Modal.style.display = 'none';
+    }
+
+    if(e.target == ep2Modal){
+        ep2Modal.style.display = 'none';
+    }
+}
+
+var endPoint1;
+function ep1Selected(id) {
+    var ep1CovContainer = document.getElementsByClassName("ep1Cov");
+    for(z = 0; z < ep1CovContainer.length; z++) {
+        ep1CovContainer[z].setAttribute('style', 'color: black');
+    }
+    var raw = id.split('-')
+    endPoint1 = raw[1];
+    var a = document.getElementById(id);
+    a.setAttribute('style', 'color: green');
+}
+
+var endPoint2;
+function ep2Selected(id) {
+    var ep2CovContainer = document.getElementsByClassName("ep2Cov");
+    for(z = 0; z < ep2CovContainer.length; z++) {
+        ep2CovContainer[z].setAttribute('style', 'color: black');
+    }
+    var raw = id.split('-')
+    endPoint2 = raw[1];
+    var a = document.getElementById(id);
+    a.setAttribute('style', 'color: green');
+}
+
+ep1Done.onclick = function () {
+    $.ajax ({
+        url: "/routes/addendpoint",
+        type: "POST",
+        data: {
+            type : 'ep1',
+            name : endPoint1,
+            routeID : routeID
+        }, 
+        success:function(data) {
+            if(data.result == "Success!")
+                ep1Modal.style.display = "none";
+            else
+                alert(data.result);
+        },error:function(data) {
+            console.log(data);
+        }
+    });
+}
+
+ep2Done.onclick = function () {
+    $.ajax ({
+        url: "/routes/addendpoint",
+        type: "POST",
+        data: {
+            type : 'ep2',
+            name : endPoint2,
+            routeID : routeID
+        }, 
+        success:function(data) {
+            if(data.result == "Success!")
+                ep2Modal.style.display = "none";
+            else
+                alert(data.result);
+        },error:function(data) {
+            alert('Error');
+        }
+    });
+}

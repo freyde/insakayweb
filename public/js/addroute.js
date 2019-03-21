@@ -225,6 +225,16 @@ function placeOnMap(id) {
     fillOpacity: 0.5,
     radius: 2000
   }).addTo(highlightLayerMapAdd);
+  var pA = new L.latLng(results[id].bbox[1], results[id].bbox[0]);
+  var pB = new L.latLng(results[id].bbox[3], results[id].bbox[2]);
+  L.polyline([pA, pB], {
+    color: 'red',
+    weight: 3,
+    opacity: 0.5,
+    smoothFactor: 1
+  
+    }).addTo(highlightLayerMapAdd);
+  
   chosenCov = {
     name : results[id].place_name,
     coordinate : center,
@@ -251,7 +261,7 @@ addCov.onclick = function() {
         color: 'red',
         fillColor: '#f03',
         fillOpacity: 0.5,
-        radius: 2000
+        radius: 1000
       }).addTo(highlightLayerMapMain);
       circleList['circleList'].push({name : chosenCov.name, circle: circ});
       console.log(circleList);

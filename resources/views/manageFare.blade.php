@@ -10,4 +10,41 @@
   <li class="breadcrumb-item"><a href="#">Reports</a></li>
 </ol>
 
+
+<input type="hidden" id="uid" value="{{ $uid }}">
+<input type="hidden" id="routeID" value="{{ $infos['routeID'] }}">
+
+FARE MATRIX
+<table id="matrix" style="table-layout: fixed; max-width: 100%">
+    <thead>
+    </thead>
+@if($haveFare)
+    <tbody>
+        <tr>
+            <td></td>
+            @foreach($fareKeys as $key)
+                <td>{{ $key }}</td>
+            @endforeach
+        </tr>
+        @foreach($fares as $a)
+            @foreach($a as $b)
+            <tr>
+            <td>{{ $fareKeys[($loop->iteration)-1] }}</td>
+                @foreach($b as $c)
+                    <td><input type="text" readonly="true" value="{{ $c }}"></td>
+                @endforeach
+            </tr>
+            @endforeach
+        @endforeach
+    </tbody>
+
+<script type="text/javascript" src="{{URL::asset('js/havefare.js')}}"></script>
+@else
+
+
+<button id="saveMatrix" type="button" class="btn btn-primary" style="float: right; margin: 3rem">Save</button>
+<script type="text/javascript" src="{{URL::asset('js/fare.js')}}"></script>
+@endif
+</table>
+
 @stop
