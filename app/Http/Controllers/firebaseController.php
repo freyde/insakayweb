@@ -355,21 +355,21 @@ class firebaseController extends Controller {
                 $routeInfos = $route;
         }
         $haveFare;
+        $fareKeys = "";
         $fares = $database->getReference('users/'. $uid .'//fares/'. $routeID)->getSnapshot()->getValue();
         if($fares != null) {
             $haveFare = true;
+            $rawKeys = $database->getReference('users/'. $uid .'//fares/'. $routeID ."/matrix")->getChildKeys();
+            $fareKeys = array();
+            foreach($rawKeys as $key) {
+                $a = explode(", ", $key);
+                $fareKeys[] = $a[0];
+            }
         } else {
            $haveFare = false;
         }
 
-        $rawKeys = $database->getReference('users/'. $uid .'//fares/'. $routeID ."/matrix")->getChildKeys();
-        $fareKeys = array();
-        foreach($rawKeys as $key) {
-            $a = explode(", ", $key);
-            $fareKeys[] = $a[0];
-        }
-        $d=0;
-        return view('manageFare')->with('infos', $routeInfos)->with('uid', $uid)->with('haveFare', $haveFare)->with('fares', $fares)->with('fareKeys', $fareKeys)->with('d', $d);
+        return view('manageFare')->with('infos', $routeInfos)->with('uid', $uid)->with('haveFare', $haveFare)->with('fares', $fares)->with('fareKeys', $fareKeys);
     }
 
     public function saveFareMatrix(Request $request) {

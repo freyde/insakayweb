@@ -18,8 +18,9 @@ FARE MATRIX
 <table id="matrix" style="table-layout: fixed; max-width: 100%">
     <thead>
     </thead>
-@if($haveFare)
     <tbody>
+@if($haveFare)
+    
         <tr>
             <td></td>
             @foreach($fareKeys as $key)
@@ -31,20 +32,25 @@ FARE MATRIX
             <tr>
             <td>{{ $fareKeys[($loop->iteration)-1] }}</td>
                 @foreach($b as $c)
-                    <td><input type="text" readonly="true" value="{{ $c }}"></td>
+                    <td><input type="text" readonly="true" value="{{ $c }}" style='width:6rem'></td>
                 @endforeach
             </tr>
             @endforeach
         @endforeach
-    </tbody>
+    
 
 <script type="text/javascript" src="{{URL::asset('js/havefare.js')}}"></script>
 @else
-
-
+    
+    
+@endif
+</tbody>
+</table>
 <button id="saveMatrix" type="button" class="btn btn-primary" style="float: right; margin: 3rem">Save</button>
+
+@if($haveFare)
+
+@else
 <script type="text/javascript" src="{{URL::asset('js/fare.js')}}"></script>
 @endif
-</table>
-
 @stop

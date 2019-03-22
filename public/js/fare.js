@@ -102,6 +102,7 @@ firebase.database().ref('users/' + uid + '/routes')
             var put = document.createElement("input");
             put.setAttribute('id', x +"-"+ y);
             put.setAttribute('placeholder', "Price");
+            put.setAttribute('style', 'width: 6rem');
             // put.setAttribute('value', "1");
             var blank = row.insertCell();
             blank.appendChild(put);
