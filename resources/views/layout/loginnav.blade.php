@@ -24,19 +24,11 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <a class="navbar-brand" href="/"><h2>Insakay</h2></a>
-  <div class="btn-group" role="group" aria-label="Button group with nested dropdown" style="position: absolute; right: 0px; padding-right: 1rem">
-    <h5 style="color: white">{{ $opName }} </h5>
-      <div class="dropdown" style="float:right;">
-        <button class="dropbtn">▼</button>
-        <div class="dropdown-content">
-          <a onClick="logout(); return false" href="#">Logout</a>
-        </div>
-      </div>
-    </div>
-  </div>
+</div>
 </nav>
   @yield('content')
 
 </body>
-<script type="text/javascript" src="{{URL::asset('js/menu.js')}}"></script>
+<script>
+</script>
 </html>

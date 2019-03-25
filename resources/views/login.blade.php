@@ -1,4 +1,4 @@
-@extends('layout.nav')
+@extends('layout.loginnav')
 @section('content')
 
 <body>

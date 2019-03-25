@@ -16,8 +16,16 @@ class firebaseController extends Controller {
         if(session()->get('uid') == null) {
             return view('login');
         } else {
+            $serviceAccount = ServiceAccount::fromJsonFile(__DIR__.'/insakay-198614-firebase-adminsdk-mrk72-6083723cf0.json');
+            $firebase = (new Factory)
+                ->withServiceAccount($serviceAccount)
+                ->create();
+            $database = $firebase->getDatabase();
             $uid = session()->get('uid');
-            return view('/controlPanel')->with('uid', $uid);
+
+            $opName = $database->getReference('users/' . $uid .'//info/operatorName')->getSnapshot()->getValue();
+            
+            return view('/controlPanel')->with('uid', $uid)->with('opName', $opName);
         }
     }
 
@@ -84,8 +92,10 @@ class firebaseController extends Controller {
         $uid = session()->get('uid');
         $array = $database->getReference('users/' . $uid .'/conductors')->getSnapshot()->getValue();
         $count = count($array);
+
+        $opName = $database->getReference('users/' . $uid .'//info/operatorName')->getSnapshot()->getValue();
  
-        return view('conductors')->with('conductors', $array)->with('uid', $uid);
+        return view('conductors')->with('conductors', $array)->with('uid', $uid)->with('opName', $opName);
     }
 
     public function listBuses() {
@@ -98,7 +108,10 @@ class firebaseController extends Controller {
         $uid = session()->get('uid');
         $array = $database->getReference('users/' . $uid .'/buses')->getSnapshot()->getValue();
         $count = count($array);
-        return view('buses')->with('buses', $array)->with('uid', $uid);
+
+        $opName = $database->getReference('users/' . $uid .'//info/operatorName')->getSnapshot()->getValue();
+
+        return view('buses')->with('buses', $array)->with('uid', $uid)->with('opName', $opName);
     }
 
     public function addConductor(Request $request) {
@@ -175,13 +188,23 @@ class firebaseController extends Controller {
 
         $routes = $database->getReference('users/' . $uid .'/routes')->getSnapshot()->getValue();
         $count = count($routes);
-        return view('route')->with('routes', $routes)->with('count', $count)->with('uid', $uid);
+
+        $opName = $database->getReference('users/' . $uid .'//info/operatorName')->getSnapshot()->getValue();
+
+        return view('route')->with('routes', $routes)->with('count', $count)->with('uid', $uid)->with('opName', $opName);
     }
 
     function viewAddRoute() {
+        $serviceAccount = ServiceAccount::fromJsonFile(__DIR__.'/insakay-198614-firebase-adminsdk-mrk72-6083723cf0.json');
+            $firebase = (new Factory)
+                ->withServiceAccount($serviceAccount)
+                ->create();
+            $database = $firebase->getDatabase();
         $uid = session()->get('uid');
 
-        return view('addRoute')->with('uid', $uid);
+        $opName = $database->getReference('users/' . $uid .'//info/operatorName')->getSnapshot()->getValue();
+
+        return view('addRoute')->with('uid', $uid)->with('opName', $opName);
     }
 
     function addRoute(Request $request) {
@@ -235,8 +258,9 @@ class firebaseController extends Controller {
         }
 
         $landmarks = $database->getReference('users/'. $uid .'//landmarks/'. $routeid)->getSnapshot()->getValue();
+        $opName = $database->getReference('users/' . $uid .'//info/operatorName')->getSnapshot()->getValue();
         // print_r($routes2);
-        return view('manageRoute')->with('infos', $infos)->with('landmarks', $landmarks)->with('uid', $uid)->with('routeID', $routeid);
+        return view('manageRoute')->with('infos', $infos)->with('landmarks', $landmarks)->with('uid', $uid)->with('routeID', $routeid)->with('opName', $opName);
     }
 
     public function addEndPoint(Request $request) {
@@ -335,8 +359,10 @@ class firebaseController extends Controller {
         $uid = session()->get('uid');
 
         $routes = $database->getReference('users/'. $uid .'/routes')->getSnapshot()->getValue();
+
+        $opName = $database->getReference('users/' . $uid .'//info/operatorName')->getSnapshot()->getValue();
         // print_r($routes);
-        return view('fare')->with('routes', $routes)->with('uid', $uid);
+        return view('fare')->with('routes', $routes)->with('uid', $uid)->with('opName', $opName);
     }
 
     public function manageFare($routeID) {
@@ -369,7 +395,9 @@ class firebaseController extends Controller {
            $haveFare = false;
         }
 
-        return view('manageFare')->with('infos', $routeInfos)->with('uid', $uid)->with('haveFare', $haveFare)->with('fares', $fares)->with('fareKeys', $fareKeys);
+        $opName = $database->getReference('users/' . $uid .'//info/operatorName')->getSnapshot()->getValue();
+
+        return view('manageFare')->with('infos', $routeInfos)->with('opName', $opName)->with('uid', $uid)->with('haveFare', $haveFare)->with('fares', $fares)->with('fareKeys', $fareKeys);
     }
 
     public function saveFareMatrix(Request $request) {
@@ -386,6 +414,21 @@ class firebaseController extends Controller {
         $database->getReference('users/'. $uid .'//fares/'. $routeID)->update([
             'matrix' => $raw,
         ]);
+    }
+
+    public function viewReports() {
+        $serviceAccount = ServiceAccount::fromJsonFile(__DIR__.'/insakay-198614-firebase-adminsdk-mrk72-6083723cf0.json');
+        $firebase = (new Factory)
+            ->withServiceAccount($serviceAccount)
+            ->create();
+        $database = $firebase->getDatabase();
+        $uid = session()->get('uid');
+        $opName = $database->getReference('users/' . $uid .'//info/operatorName')->getSnapshot()->getValue();
+
+        $reports = $database->getReference('users/' . $uid .'/reports')->getSnapshot()->getValue();
+        $keys = $database->getReference('users/' . $uid .'/reports')->getChildKeys();
+
+        return view('reports')->with('uid', $uid)->with('opName', $opName)->with('keys', $keys)->with('reports', $reports);
     }
 }
 
