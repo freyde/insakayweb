@@ -44,6 +44,8 @@
 </div>
 
 <!-------------------------------------MAIN DIV------------------------------------------>
+<h5>Add Route</h5>
+<hr>
 <div style="width: 100%; height: 100%">
 <!------------------------------------ LEFT DIV ---------------------------------------->
   <div style="width: 35rem; height: 35rem; border: solid; padding: 1rem; margin: 1rem; float: left">
@@ -55,7 +57,7 @@
       <thead>
         <tr>
           <th>
-          <input type="button" height="20" width="20" id="addRow" value="add" style="border-radius: 10px">
+          <input class="btn btn-success" type="button" height="20" width="20" id="addRow" value="add" style="border-radius: 10px">
           </th>
         </tr>
       </thead>

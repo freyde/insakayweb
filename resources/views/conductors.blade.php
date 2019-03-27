@@ -10,9 +10,10 @@
   <li class="breadcrumb-item"><a href="/fare">Fare</a></li>
   <li class="breadcrumb-item"><a href="/reports">Reports</a></li>
 </ol>
+<h5>Conductors List</h5>
+<hr>
 
-
-<div class="contents">
+<div class="contents" style="float: right; right: 1rem">
 <input type="button" class="btn btn-success" value="＋Conductor" id="addCond">
 </div>
 

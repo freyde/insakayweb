@@ -10,9 +10,9 @@
   <li class="breadcrumb-item"><a href="/fare">Fare</a></li>
   <li class="breadcrumb-item"><a href="/reports">Reports</a></li>
 </ol>
-
-
-<div class="contents">
+<h5>Buses List</h5>
+<hr>
+<div class="contents" style="float: right; right: 1rem">
 <input type="submit" class="btn btn-success" value="＋Bus" id="addBs">
 </div>
 

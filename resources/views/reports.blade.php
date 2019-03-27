@@ -8,9 +8,9 @@
   <li class="breadcrumb-item"><a href="/fare">Fare</a></li>
   <li class="breadcrumb-item"><a href="/reports">Reports</a></li>
 </ol>
-
 <input type="hidden" id="uid" value="{{ $uid }}">
-
+<h5>Conductors Daily Reports</h5>
+<hr>
 @foreach($keys as $key)
 <div class="report-dropdown">
     <button class="report-dropbtn">{{$key}}</button>

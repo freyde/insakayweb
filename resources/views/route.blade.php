@@ -9,9 +9,13 @@
   <li class="breadcrumb-item"><a href="/reports">Reports</a></li>
 </ol>
 
+<h5>Routes List</h5>
+<hr>
+<div class="contents" style="float: right; right: 1rem">
 <input type="button" class="btn btn-success" value="Add Route" id="addRouteBtn">
+</div>
 <br><br>
-<div class="view" id="" style="width: 60rem; margin-left: 3rem">
+<div class="main-container">
 <table class="table table-hover">
 @if($routes != null) 
   

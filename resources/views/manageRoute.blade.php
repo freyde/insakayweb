@@ -12,7 +12,6 @@
 
 <div style="display: block">
   <h3>Route Information</h3>
-  <button id="addCov" type="button" class="btn btn-secondary" style="float: right">Add Coverage</button>
 </div>
 
 <div style="display: block">
@@ -53,7 +52,7 @@
 </div>
 <div style="display: block">
     <h3 style="float: left">List of Landmarks</h3>
-    <button id="addLand" type="button" class="btn btn-secondary" style="float: right">Add Landmark</button>
+    <button id="addLand" type="button" class="btn btn-success" style="float: right">Add Landmark</button>
 </div>
 
 <div style="display: block; float: left: width:100%">

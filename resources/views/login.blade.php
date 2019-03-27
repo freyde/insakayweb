@@ -35,7 +35,6 @@
 
 <script type="text/javascript" src="{{URL::asset('js/index.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('js/firebase.js')}}"></script>
-<script type="text/javascript" src="{{URL::asset('js/modals.js')}}"></script>
 
  
 </script>

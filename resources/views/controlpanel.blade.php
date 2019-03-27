@@ -10,11 +10,11 @@
   <li class="breadcrumb-item"><a href="/reports">Reports</a></li>
 </ol>
 
-<div class="main-container"> 
+<input type="hidden" id="uid" value="{{ $uid }}">
+<div class="main-container">
+<div id="map" style="width: 100%; height: 40rem"></div>
 </div>
-
-<script type="text/javascript" src="{{URL::asset('js/index.js')}}"></script>
-<script type="text/javascript" src="{{URL::asset('js/firebase.js')}}"></script>
+<script type="text/javascript" src="{{URL::asset('js/panel.js')}}"></script>
 
 @stop
 </body>

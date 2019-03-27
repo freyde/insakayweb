@@ -78,13 +78,15 @@ function addRow() {
     coverageInput.setAttribute("name", "coveInptBox");
     coverageInput.setAttribute("readonly", "true");
     coverageInput.setAttribute("placeholder", "Click to add coverage");
+    coverageInput.setAttribute("class", "form-control form-control-sm");
     coverageInput.setAttribute("style", "width: 28rem");
     coverageInput.setAttribute("onClick", "showModal(this.id)")
     var deleteBtn = document.createElement("input");
     deleteBtn.setAttribute("id", rowcount);
     deleteBtn.setAttribute("name", "delete");
     deleteBtn.setAttribute("type", "button");
-    deleteBtn.setAttribute("style", "border-radius: 10px");
+    deleteBtn.setAttribute("class","btn btn-secondary");
+    deleteBtn.setAttribute("style", "padding: 2px; padding-left: 10px; padding-right: 10px; border-radius: 10px");
     deleteBtn.setAttribute("value", "delete");
     deleteBtn.setAttribute("onClick", "deleteRow(this.id)");
     

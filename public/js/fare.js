@@ -11,7 +11,7 @@ var config = {
     projectId: "insakay-198614",
     storageBucket: "insakay-198614.appspot.com",
     messagingSenderId: "768233361294"
-  };
+};
 firebase.initializeApp(config);
 
 
