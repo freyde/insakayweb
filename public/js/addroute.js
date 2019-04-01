@@ -36,6 +36,7 @@ var layerMain = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v10
 });
 layerMain.addTo(mapMain);
 mapMain.setView([12.8797, 121.7740], 5);
+mapMain.scrollWheelZoom.disable();
 
 
 span.onclick = function() {
@@ -71,7 +72,7 @@ function addRow() {
     // var func = "deleteRow".rowcount
     // alert("sad");
     var row = table.insertRow(-1);
-    row.setAttribute("id", "row".concat(rowcount))
+    row.setAttribute("id", "row".concat(rowcount));
     // table.deleteCell(1);
     var coverageInput = document.createElement("input");
     coverageInput.setAttribute("id", "cov".concat(rowcount));
@@ -79,8 +80,8 @@ function addRow() {
     coverageInput.setAttribute("readonly", "true");
     coverageInput.setAttribute("placeholder", "Click to add coverage");
     coverageInput.setAttribute("class", "form-control form-control-sm");
-    coverageInput.setAttribute("style", "width: 28rem");
-    coverageInput.setAttribute("onClick", "showModal(this.id)")
+    coverageInput.setAttribute("onClick", "showModal(this.id)");
+
     var deleteBtn = document.createElement("input");
     deleteBtn.setAttribute("id", rowcount);
     deleteBtn.setAttribute("name", "delete");
@@ -148,7 +149,7 @@ function deleteRow(show) {
 }
 
 function showModal(addBoxID) {
-    var layerAdd = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZnJleWRlIiwiYSI6ImNqdDZ3MGJlZDBqcWg0NG1zbWphMDBlZ2UifQ.uVop-nTgkAx-ZOpr9CEIqA', {
+  var layerAdd = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZnJleWRlIiwiYSI6ImNqdDZ3MGJlZDBqcWg0NG1zbWphMDBlZ2UifQ.uVop-nTgkAx-ZOpr9CEIqA', {
     maxZoom: 18,
     id: 'mapbox.streets',
     // accessToken: 'map-add-routes'
@@ -156,7 +157,7 @@ function showModal(addBoxID) {
   curID = addBoxID;
   layerAdd.addTo(mapAdd);
   L.Util.requestAnimFrame(mapAdd.invalidateSize,mapAdd,!1,mapAdd._container);
-  mapMainView.style.display = 'none';
+  // mapMainView.style.display = 'none';
   mapAdd.setView([12.8797, 121.7740], 5);
   modal.style.display = "block";
   box.focus();
@@ -172,7 +173,6 @@ searchButton.onclick = function() {
       url: "https://api.mapbox.com/geocoding/v5/mapbox.places/" + data + ".json?access_token=" + access_token + "&country=" + country +"&autocomplete=false&limit=10&types=place,locality",
       type: "GET"
       ,success:function(data) {
-          console.log(data);
           highlightLayerMapAdd.clearLayers();
           mapAdd.setView([12.8797, 121.7740], 5);
           results = data.features;
@@ -266,7 +266,6 @@ addCov.onclick = function() {
         radius: 1000
       }).addTo(highlightLayerMapMain);
       circleList['circleList'].push({name : chosenCov.name, circle: circ});
-      console.log(circleList);
       var newCovBox = document.getElementById(curID);
       newCovBox.value = chosenCov.name;
       modal.style.display = "none";
@@ -278,26 +277,34 @@ addCov.onclick = function() {
       alert("Coverage already added");
     }
   }
-  console.log(covList);
 }
 
 saveAll.onclick = function() {
-  var name = document.getElementById("routeName");
-  var list = covList.coverageList;
-  console.log(list);
-  $.ajax ({
-    url: "/routes/addroute/save",
-    type: "POST",
-    data: {
-      name : name.value,
-      list : list,
-    },
-    success:function(data) {
-        window.location.href = "/routes";
-    },error:function(data) {
-        alert(data.success);
+  var name = document.getElementById("routeName").value;
+  if(name != "") {
+    var list = covList.coverageList;
+    console.log(list);
+    if(list.length > 0) {
+      loader.style.display = 'block';
+      $.ajax ({
+        url: "/routes/addroute/save",
+        type: "POST",
+        data: {
+          name : name,
+          list : list,
+        },
+        success:function(data) {
+            window.location.href = "/routes";
+        },error:function(data) {
+            alert(data.success);
+        }
+      });
+    } else {
+      alert("Add atleast one coverage!")
     }
-  });
+  } else {
+    alert("Route name is required!");
+  }
 }
 
 cancelAll.onclick = function() {

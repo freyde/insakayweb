@@ -3,6 +3,9 @@ $.ajaxSetup({
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 })
+var loader = document.getElementById('loader');
+var dialog = document.getElementById('dialog');
+
 //Displays
 var addBusBtn = document.getElementById('addBs');
 var addBusModal = document.getElementById('addBusModal');
@@ -42,6 +45,8 @@ function saveToFirebase() {
     var name = driName.value;
     var plateNo = plate.value;
     console.log(driName.value + " " + plate.value);
+    loader.style.display = 'block';
+    dialog.style.display = 'none';
     $.ajax ({
         url: "/addbus",
         type: "POST",

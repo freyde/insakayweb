@@ -17,6 +17,7 @@ var layerMain = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v10
 });
 layerMain.addTo(mapMain);
 mapMain.setView([12.8797, 121.7740], 5);
+mapMain.scrollWheelZoom.disable();
 
 var uid = document.getElementById('uid').value;
 console.log(uid);
@@ -53,7 +54,8 @@ firebase.database().ref('onOperation')
                     console.log(info.lat);
                     var marker = L.marker([info.lat, info.long]).addTo(markers);
                     marker.bindPopup(conductor).openPopup();
-                });ep1 = route.endPoint1;
+                });
+                
             }
         });
     }

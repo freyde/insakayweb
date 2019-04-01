@@ -1,20 +1,13 @@
 @extends('layout.nav')
 @section('content')
 
-<ol class="breadcrumb">
-  <li class="breadcrumb-item"><a href="/conductors">Conductors</a></li>
-  <li class="breadcrumb-item"><a href="/buses">Buses</a></li>
-  <li class="breadcrumb-item"><a href="/routes">Route</a></li>
-  <li class="breadcrumb-item"><a href="/fare">Fare</a></li>
-  <li class="breadcrumb-item"><a href="/reports">Reports</a></li>
-</ol>
-
-
 <input type="hidden" id="uid" value="{{ $uid }}">
 <input type="hidden" id="routeID" value="{{ $infos['routeID'] }}">
 
-FARE MATRIX
-<table id="matrix" style="table-layout: fixed; max-width: 100%">
+
+<h3 class="font-weight-bolder ml-3 mt-3">{{ $routeName }} - FARE MATRIX</h3>
+<div class="container">
+<table id="matrix" class="table table-sm" style="table-layout: fixed; max-width: 100%">
     <thead>
     </thead>
     <tbody>
@@ -23,13 +16,13 @@ FARE MATRIX
         <tr>
             <td></td>
             @foreach($fareKeys as $key)
-                <td>{{ $key }}</td>
+                <td class="font-weight-bold">{{ $key }}</td>
             @endforeach
         </tr>
         @foreach($fares as $a)
             @foreach($a as $b)
             <tr>
-            <td>{{ $fareKeys[($loop->iteration)-1] }}</td>
+            <td  class="font-weight-bold">{{ $fareKeys[($loop->iteration)-1] }}</td>
                 @foreach($b as $c)
                     <td><input type="text" readonly="true" value="{{ $c }}" style='width:6rem'></td>
                 @endforeach
@@ -41,11 +34,12 @@ FARE MATRIX
 <script type="text/javascript" src="{{URL::asset('js/havefare.js')}}"></script>
 @else
     
-    
+<button id="saveMatrix" type="button" class="btn btn-primary" style="float: right; margin: 3rem">Save</button>
 @endif
 </tbody>
 </table>
-<button id="saveMatrix" type="button" class="btn btn-primary" style="float: right; margin: 3rem">Save</button>
+
+</div>
 
 @if($haveFare)
 
@@ -53,3 +47,4 @@ FARE MATRIX
 <script type="text/javascript" src="{{URL::asset('js/fare.js')}}"></script>
 @endif
 @stop
+</html>

@@ -1,23 +1,15 @@
 @extends('layout.nav')
 @section('content')
 
-<ol class="breadcrumb">
-  <li class="breadcrumb-item"><a href="/conductors">Conductors</a></li>
-  <li class="breadcrumb-item"><a href="/buses">Buses</a></li>
-  <li class="breadcrumb-item"><a href="/routes">Route</a></li>
-  <li class="breadcrumb-item"><a href="/fare">Fare</a></li>
-  <li class="breadcrumb-item"><a href="/reports">Reports</a></li>
-</ol>
-<h5>Fare Management</h5>
-<hr>
-List of routes
-<div class="main-container">
+<h3 class="font-weight-bolder ml-3 mt-3">Fare Management</h3>
+
+<div class="main-container p-3">
   <table class="table table-hover">
   @if($routes != null) 
     
         <thead>
           <tr>
-            <th>ID</th>
+            <th>Route ID</th>
             <th>Name</th>
             <th>Coverage Count</th>
             <th>Landmark Count</th>
@@ -45,6 +37,5 @@ List of routes
     No Routes Found
   @endif
 </div>
-
 @stop
-
+</html>

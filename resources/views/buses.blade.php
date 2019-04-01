@@ -1,46 +1,10 @@
 @extends('layout.nav')
 @section('content')
 
-<body>
+<h3 class="font-weight-bolder ml-3 mt-3">Buses List</h3>
+<input type="submit" class="btn btn-primary float-right mb-2 mr-3" value="＋Bus" id="addBs">
 
-<ol class="breadcrumb">
-  <li class="breadcrumb-item"><a href="/conductors">Conductors</a></li>
-  <li class="breadcrumb-item"><a href="/buses">Buses</a></li>
-  <li class="breadcrumb-item"><a href="/routes">Route</a></li>
-  <li class="breadcrumb-item"><a href="/fare">Fare</a></li>
-  <li class="breadcrumb-item"><a href="/reports">Reports</a></li>
-</ol>
-<h5>Buses List</h5>
-<hr>
-<div class="contents" style="float: right; right: 1rem">
-<input type="submit" class="btn btn-success" value="＋Bus" id="addBs">
-</div>
-
-<div class="modal" id="addBusModal">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Add Bus</h5>
-        <button id="addBUsClose" type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      <label class="col-form-label col-form-label-sm" for="inputSmall">Driver's Name</label>
-        <input class="form-control form-control-sm" type="text" placeholder="Full Name" id="dName">
-
-        <label class="col-form-label col-form-label-sm" for="inputSmall">Bus Plate Number</label>
-        <input class="form-control form-control-sm" type="text" placeholder="Registered Plate Number" id="pNumber">
-      </div>
-      <div class="modal-footer">
-        <button id="addBus" type="button" class="btn btn-primary">Add</button>
-        <button id="addBusClose" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="main-container">
+<div class="main-container p-3">
 @if($buses != null)
 <table class="table">
   <thead>
@@ -71,7 +35,32 @@
   </thead>
 </table>
 @endif
-</body>
+
+<div class="modal modal-backdrop" id="addBusModal">
+  <div id="loader" class="spinner-border text-primary mx-auto fixed-top" style="margin-top: 13%; display: none"></div>
+  <div id="dialog" class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Bus</h5>
+        <button id="addBUsClose" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <label class="col-form-label col-form-label-sm" for="inputSmall">Driver's Name</label>
+        <input class="form-control form-control-sm" type="text" placeholder="Full Name" id="dName">
+
+        <label class="col-form-label col-form-label-sm" for="inputSmall">Bus Plate Number</label>
+        <input class="form-control form-control-sm" type="text" placeholder="Registered Plate Number" id="pNumber">
+      </div>
+      <div class="modal-footer">
+        <button id="addBus" type="button" class="btn btn-primary">Add</button>
+        <button id="addBusClose" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script type="text/javascript" src="{{URL::asset('js/bus.js')}}"></script>
 @stop
 </html>

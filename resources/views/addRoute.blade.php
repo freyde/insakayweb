@@ -1,85 +1,79 @@
 @extends('layout.nav')
 @section('content')
-<ol class="breadcrumb">
-  <li class="breadcrumb-item"><a href="/conductors">Conductors</a></li>
-  <li class="breadcrumb-item"><a href="/buses">Buses</a></li>
-  <li class="breadcrumb-item"><a href="/routes">Route</a></li>
-  <li class="breadcrumb-item"><a href="/fare">Fare</a></li>
-  <li class="breadcrumb-item"><a href="/reports">Reports</a></li>
-</ol>
 
-<!-- The Modal -->
-<div id="addCoverage" class="modal">
-  <!-- Modal content -->
-  <div class="modal-content" style="height: 37rem; z-index: 2">
-    <div>
-    <span class="close">&times;</span>
-    <h3>Add Coverage to Route</h3>
-    <hr>
-    </div>
-    <div style="width: 100%; height: 100%">
-      <div style="float: left; width: 60%; padding: 1rem">
-        <div style="height: 25rem">
-          <!-- <form> -->
-            <input class="form-control form-control-sm" type="text" placeholder="Search City or Municipality" id="searchbox" style="float: left; width: 80%"></input>
-            <input type="button" value="Search" style="margin-left: 1rem" id="searchBtn">
-          <!-- </form> -->
-          <table id="searchResult" style="width: 100%; margin-top: 1rem" class="table-hover">
-            <tbody>
-            </tbody>
-          </table>
-        </div>
-  
-        <div align="right" style="margin-top: 1rem">
-          <hr>
-          <button id="addCov" type="button" class="btn btn-primary">Save</button>
-          <button id="addCovClose" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        </div>
-      </div>
-      <div style="width: 100%; height: 100%">
-        <div id="mapAdd" style="background-color:gray; width: 40%; height: 30rem; z-index: 1;"></div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-------------------------------------MAIN DIV------------------------------------------>
-<h5>Add Route</h5>
-<hr>
-<div style="width: 100%; height: 100%">
+<div class="container">
+  <h3 class="font-weight-bolder ml-3 mt-3">Add Route</h3>
+
+  <div class="row">
 <!------------------------------------ LEFT DIV ---------------------------------------->
-  <div style="width: 35rem; height: 35rem; border: solid; padding: 1rem; margin: 1rem; float: left">
-    <label class="col-form-label col-form-label-sm" for="inputSmall">Route Name</label>
-    <input class="form-control form-control-sm" type="text" placeholder="" id="routeName"></input>
-    <hr>
-    <label class="col-form-label col-form-label-sm" for="inputSmall">Coverage</label>
-    <table id="coverage" >
-      <thead>
-        <tr>
-          <th>
-          <input class="btn btn-success" type="button" height="20" width="20" id="addRow" value="add" style="border-radius: 10px">
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-      </tbody>
-    </table>
+    <div class="col-md-4">
+      <label class="col-form-label col-form-label-sm" for="inputSmall">Route Name</label>
+      <input class="form-control form-control-sm" type="text" placeholder="" id="routeName"></input>
+      <hr>
+      <label class="col-form-label col-form-label-sm" for="inputSmall">Coverage</label>
+      <table id="coverage">
+        <thead>
+          <tr>
+            <th class="w-100">
+            <input class="btn btn-success p-1" type="button" id="addRow" value="add">
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+<!------------------------------------- RIGHT DIV ------------------------------------------------>
+    <div class="col-md-8">
+      <div id="mapMain" style="background-color:gray ;width: 100%; height: 70%;"></div>
+    </div>
   </div>
 
-
-<!------------------------------------- RIGHT DIV ------------------------------------------------>
-  <div style="width: 45rem; height: 35rem; border: solid; padding: 1rem; margin: 1rem; float: left; z-index: 1">
-    <div id="mapMain" style="background-color:gray ;width: 100%; height: 100%;"></div>
+  <div class="float-right mt-2">
+      <input type="button" class="btn btn-secondary" value="Cancel" id="cancelAddRoute"></input>
+      <input type="button" class="btn btn-success" value="Save Route" id="saveRoute"></input>
   </div>
 </div>
-<div align="right" style="margin-right:1rem; margin-bottom: 1rem">
 
-    <input type="button" class="btn btn-secondary" value="Cancel" id="cancelAddRoute"></input>
-    <input type="button" class="btn btn-success" value="Save Route" id="saveRoute"></input>
+<!-- The Modal -->
+<div id="addCoverage" class="modal modal-backdrop">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Add Coverage to Route</h3>
+        <span class="close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-5">
+            <input class="form-control form-control-sm w-75 float-left" type="text" placeholder="Search Barangay" id="searchbox">
+            <input class="btn btn-success ml-2 pt-0 pb-0" type="button" value="Search"  id="searchBtn">
+            <table id="searchResult" class="table-hover float-left mt-3">
+              <tbody>
+              </tbody>
+            </table>
+          </div>
 
+          <div class="col-md-7">
+            <div id="mapAdd" style="background-color:gray; width: 100%; height: 65%;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="addCov" type="button" class="btn btn-primary">Save</button>
+        <button id="addCovClose" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="loader" class="modal modal-backdrop">
+  <div class="spinner-border text-primary mx-auto fixed-top" style="margin-top: 20%;"></div>
 </div>
 
 <script type="text/javascript" src="{{URL::asset('js/firebase.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('js/addroute.js')}}"></script>
-
 @stop
+</html>

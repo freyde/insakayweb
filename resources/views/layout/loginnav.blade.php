@@ -6,10 +6,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Insakay - Log In</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="{{URL::asset('css/sandstone.min.css')}}">
-    <link rel="stylesheet" type="text/css" media="screen" href="{{URL::asset('css/loader.css')}}">
     <link rel="stylesheet" type="text/css" media="screen" href="{{URL::asset('css/custom.css')}}">
     <link rel="stylesheet" href="{{URL::asset('leaflet/leaflet.css')}}" />
+    
+    <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
 
     <script src='https://api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
@@ -22,12 +22,11 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
   <a class="navbar-brand" href="/"><h2>Insakay</h2></a>
 </div>
 </nav>
   @yield('content')
-
 </body>
 <script>
 </script>

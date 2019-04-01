@@ -1,44 +1,37 @@
 @extends('layout.loginnav')
 @section('content')
+<div clas="container">
+<div class="card w-25 mx-auto">
+  <div class="card-header">
+	  <h4>Welcom to Insakay</h4>
+</div>
+  <div class="card-body">
 
-<body>
-  <!-- <div id="loader" class="loader">
-    <div class="sk-folding-cube">
-      <div class="sk-cube1 sk-cube"></div>
-      <div class="sk-cube2 sk-cube"></div>
-      <div class="sk-cube4 sk-cube"></div>
-      <div class="sk-cube3 sk-cube"></div>
-    </div>
-  </div> -->
+		<div class="input-group form-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text"><i class="fas fa-user"></i></span>
+			</div>
+			<input type="email" class="form-control" id="email" placeholder="Email Address">
+		</div>
+
+		<div class="input-group form-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text"><i class="fas fa-user"></i></span>
+			</div>
+			<input type="password" class="form-control" id="password" placeholder="Password">
+		</div>
   
-  <div id="logindiv">
-    <fieldset>
-      <div class="card border-light mb-3" style="max-width: 20rem;">
-        <div class="card-header">Welcom to Insakay</div>
-          <div class="card-body">
-            <div class="form-group">
-              <label for="exampleInputEmail1">Email address</label>
-              <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
-            </div>
-            <div class="form-group">
-              <label for="exampleInputPassword1">Password</label>
-              <input type="password" class="form-control" id="password" placeholder="Password">
-              <input type="hidden" name="_token" value="{{ Session::token() }}">
-            </div>
-            <input type="submit" class="btn btn-secondary" onclick="login()" value="Log in">
-          </div>
-        </div>
-      </div>
-    </fieldset>
-  </div>
+    
+    
+    <input type="hidden" name="_token" value="{{ Session::token() }}">
+  
+    <input type="submit" class="btn btn-primary float-right" onclick="login()" value="Log in">
 
+  </div>
+</div>
 
 <script type="text/javascript" src="{{URL::asset('js/index.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('js/firebase.js')}}"></script>
 
- 
-</script>
-
-@stop  
-</body>
+@stop
 </html>

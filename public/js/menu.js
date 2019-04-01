@@ -16,7 +16,6 @@ var config = {
 firebase.initializeApp(config);
 
 function logout() {
-    
     firebase.auth().signOut().then(function() {
         sessionStorage.clear();
         $.ajax ({

@@ -15,7 +15,7 @@ var config = {
 firebase.initializeApp(config);
 
 function login() {
-
+    console.log("Login")
     var adminEmail = document.getElementById("email").value;
     var adminPass = document.getElementById("password").value;
 

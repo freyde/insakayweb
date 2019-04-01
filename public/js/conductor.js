@@ -3,6 +3,8 @@ $.ajaxSetup({
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
+var loader = document.getElementById('loader');
+var dialog = document.getElementById('dialog');
 
 var addCondBtn = document.getElementById('addCond');
 var addCondModal = document.getElementById('addCondModal');
@@ -49,6 +51,8 @@ function saveToFirebase() {
     var password = pass.value;
     var cpassword = cpass.value;
     if(password == cpassword) {
+        loader.style.display = 'block';
+        dialog.style.display = 'none';
         $.ajax ({
             url: "/addconductor",
             type: "POST",
@@ -58,8 +62,6 @@ function saveToFirebase() {
                 pass : password
             },
             success:function(data) {
-                alert(data.success);
-                addCondModal.style.display = 'none';
                 window.location.href = "/conductors";
             },error:function(data) {
                 alert(data.success);
