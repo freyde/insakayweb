@@ -3,6 +3,7 @@ $.ajaxSetup({
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 })
+var loader = document.getElementById('loader');
 
 var addOpBtn = document.getElementById('addOp');
 var addOpModal = document.getElementById('addOpModal');
@@ -55,22 +56,56 @@ function clickOutside(e) {
 }
 
 function saveToFirebase() {
-  $.ajax ({
-    url: "/admin/addoperator",
-    type: "POST",
-    data: {
-        fullName : operatorName.value,
-        shortName : shortName.value,
-        ownerFName : ownerFirstName.value,
-        ownerLName : ownerLastName.value,
-        emailAddress : email.value,
-        pass : password.value,
-        key : opKey,
-    }, 
-    success:function(data) {
-      window.location.href = "/admin/operators";
-    },error:function(data) {
-      alert('Please');
+  var opName = operatorName.value;
+  var opSName = shortName.value;
+  var fName = ownerFirstName.value;
+  var lName = ownerLastName.value;
+  var opEmail = email.value;
+  var opPass = password.value;
+  var opCPass = cPassword.value;
+  var key = opKey.value;
+  if(opName != "" && opSName != "" && fName != "" && lName != "" && opEmail != "" && key != "") {
+    if(key.length >= 6) {
+      if(opPass.length >= 6) {
+        if(opPass == opCPass) {
+          loader.style.display = "block";
+          addOpModal.style.display = "none";
+          $.ajax ({
+            url: "/admin/addoperator",
+            type: "POST",
+            data: {
+                fullName : opName,
+                shortName : opSName,
+                ownerFName : fName,
+                ownerLName : lName,
+                emailAddress : opEmail,
+                pass : opPass,
+                key : key
+            }, 
+            success:function(data) {
+              window.location.href = "/admin/operators";
+            },error:function(data) {
+              alert('Error adding operator.');
+            }
+          });
+        } else {
+          alert("Password did not match!");
+          password.value = "";
+          cPassword.value = "";
+        }
+      } else {
+        alert("Password is too short! (Minimum of 6 characters)");
+        password.value = "";
+        cPassword.value = "";
+      }
+    } else {
+      alert("Key requires 6 character or longer");
+      password.value = "";
+      cPassword.value = "";
     }
-  });
+  } else {
+    alert("Please complete all information needed.");
+    password.value = "";
+    cPassword.value = "";
+  }
 }

@@ -5,13 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Insakay - Log In</title>
-    <link rel="shortcut icon" href="{{URL::asset('img/favicon.ico')}}" type='image/x-icon'/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <link rel="stylesheet" type="text/css" media="screen" href="{{URL::asset('css/custom.css')}}"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="{{URL::asset('css/custom.css')}}">
     <link rel="stylesheet" href="{{URL::asset('leaflet/leaflet.css')}}" />
     
-    <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}"/>
+    <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
 
     <script src='https://api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
@@ -25,7 +23,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-  <a class="navbar-brand" href="/"><h2>Insakay</h2></a>
+  <a class="navbar-brand" href="/"><h2>Insakay-Admin</h2></a>
 </div>
 </nav>
   @yield('content')

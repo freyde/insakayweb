@@ -35,12 +35,13 @@ Route::post('/fare/savematrix', 'firebaseController@saveFareMatrix');
 
 Route::get('/reports', 'firebaseController@viewReports');
 //
-Route::get('/admin', 'firebaseController@adminHomemanager');
+Route::get('/admin', 'adminController@adminHomemanager');
 Route::post('/verifyadmin', 'sessionController@adminsave');
 //
-Route::get('/admin/operators', 'adminController@listOperators');
 Route::post('/admin/addoperator', 'adminController@addOperatorAccount');
 Route::get('/admin/manage/{operator}', 'adminController@displayOperator');
+
+Route::post('/admin/deleteoperator', 'adminController@deleteOperatorAccount');
 
 Route::get('/routetest', 'firebaseController@index');
 

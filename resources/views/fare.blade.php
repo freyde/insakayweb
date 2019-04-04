@@ -34,7 +34,13 @@
       </table>
     </div>
   @else
-    No Routes Found
+  <table class="table">
+    <thead>
+        <tr align="center">
+            <th>No Routes Found</th>
+        </tr>
+    </thead>
+  </table>
   @endif
 </div>
 @stop

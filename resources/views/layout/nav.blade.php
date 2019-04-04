@@ -6,7 +6,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Insakay - {{ $opName }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="{{URL::asset('css/custom.css')}}">
+    <link rel="shortcut icon" href="{{URL::asset('img/inSakay.ico')}}" >
+    <link rel="stylesheet" href="{{URL::asset('css/custom.css')}}">
     <link rel="stylesheet" href="{{URL::asset('leaflet/leaflet.css')}}" />
     <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
 
@@ -25,7 +26,7 @@
 <div class="fixed-top">
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark shadow">
     <a class="navbar-brand" href="/"><h2>Insakay</h2></a>
-    <div class="navbar-item float-right mt-0 mb-0 mr-3" style="margin-left: 80%">
+    <div class="navbar-item float-right mt-0 mb-0 mr-3" style="margin-left: 75%">
       <li class="dropdown">
         <a class="dropdown-toggle font-weight-bold" href="#" data-toggle="dropdown">
           {{ $opName }}
@@ -56,4 +57,3 @@
 </div>
 </body>
 <script type="text/javascript" src="{{URL::asset('js/menu.js')}}"></script>
-</html>

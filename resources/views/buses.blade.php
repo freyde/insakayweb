@@ -30,7 +30,7 @@
 <table class="table">
   <thead>
       <tr align="center">
-          <th>No Operators Found</th>
+          <th>No Registered Bus</th>
       </tr>
   </thead>
 </table>

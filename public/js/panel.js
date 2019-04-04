@@ -8,7 +8,9 @@ var config = {
 };
 firebase.initializeApp(config);
 
-var mapMain = L.map('map');
+var mapMain = L.map('map', {
+    zoomSnap: 0.5
+});
 var markers = L.layerGroup().addTo(mapMain);
 var layerMain = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZnJleWRlIiwiYSI6ImNqdDZ3MGJlZDBqcWg0NG1zbWphMDBlZ2UifQ.uVop-nTgkAx-ZOpr9CEIqA', {
     maxZoom: 18,
@@ -53,7 +55,7 @@ firebase.database().ref('onOperation')
                     var info = snapshot.val();
                     console.log(info.lat);
                     var marker = L.marker([info.lat, info.long]).addTo(markers);
-                    marker.bindPopup(conductor).openPopup();
+                    marker.bindPopup(conductor);
                 });
                 
             }

@@ -19,7 +19,9 @@ var results;
 var searchButton = document.getElementById('searchBtn');
 var box = document.getElementById('searchbox');
 var mapMainView = document.getElementById('mapMain');
-var mapAdd = L.map('mapAdd');
+var mapAdd = L.map('mapAdd', {
+  zoomSnap: 0.5
+});
 var highlightLayerMapAdd = L.layerGroup().addTo(mapAdd);
 var resultView = document.getElementById("searchResult");
 var curID = "";
@@ -27,7 +29,9 @@ var chosenCov = "";
 var covList = {coverageList : []};
 var circleList = {circleList : []};
 var centerList = {centerList : []};
-var mapMain = L.map('mapMain');
+var mapMain = L.map('mapMain', {
+  zoomSnap: 0.5
+});
 var highlightLayerMapMain = L.layerGroup().addTo(mapMain);
 var layerMain = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZnJleWRlIiwiYSI6ImNqdDZ3MGJlZDBqcWg0NG1zbWphMDBlZ2UifQ.uVop-nTgkAx-ZOpr9CEIqA', {
     maxZoom: 18,
@@ -205,7 +209,7 @@ searchButton.onclick = function() {
               color: 'red',
               fillColor: '#f03',
               fillOpacity: 0.5,
-              radius: 3000
+              radius: 1000
             }).addTo(highlightLayerMapAdd);
           }
         },error:function(data) {
@@ -220,22 +224,14 @@ searchButton.onclick = function() {
 function placeOnMap(id) {
   highlightLayerMapAdd.clearLayers();
   var center = [results[id].center[1], results[id].center[0]];
-  mapAdd.setView(center, 13)
-  L.circle(center, {
-    color: 'red',
-    fillColor: '#f03',
-    fillOpacity: 0.5,
-    radius: 2000
-  }).addTo(highlightLayerMapAdd);
-  var pA = new L.latLng(results[id].bbox[1], results[id].bbox[0]);
-  var pB = new L.latLng(results[id].bbox[3], results[id].bbox[2]);
-  L.polyline([pA, pB], {
-    color: 'red',
-    weight: 3,
-    opacity: 0.5,
-    smoothFactor: 1
-  
-    }).addTo(highlightLayerMapAdd);
+  mapAdd.setView(center, 13);
+
+  L.polygon([
+    [results[id].bbox[1], results[id].bbox[0]],
+    [results[id].bbox[1], results[id].bbox[2]],
+    [results[id].bbox[3], results[id].bbox[2]],
+    [results[id].bbox[3], results[id].bbox[0]]
+  ]).addTo(highlightLayerMapAdd);
   
   chosenCov = {
     name : results[id].place_name,

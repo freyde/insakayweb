@@ -26,7 +26,7 @@ firebase.database().ref('users/' + uid + '/routes').once("value").then(function(
         } 
     }); 
 });
-
+var updated = false;
 var addLandBtn = document.getElementById('addLand');
 var addLandModal = document.getElementById('addLandmarkModal');
 var addLandClose = document.getElementById('addLandClose');
@@ -49,8 +49,11 @@ addLand.addEventListener('click', saveToFirebase);
 window.addEventListener('click', clickOutside);
 // var routeID = id.value;
 
-var mapAddLand = L.map('mapAddLandmark');
+var mapAddLand = L.map('mapAddLandmark', {
+    zoomSnap: 0.5
+});
 var areaLayerMap = L.layerGroup().addTo(mapAddLand);
+var markerLayerMap = L.layerGroup().addTo(mapAddLand);
 var layerLandmark = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZnJleWRlIiwiYSI6ImNqdDZ3MGJlZDBqcWg0NG1zbWphMDBlZ2UifQ.uVop-nTgkAx-ZOpr9CEIqA', {
     maxZoom: 18,
     id: 'mapbox.streets-v10',
@@ -63,21 +66,30 @@ mapAddLand.scrollWheelZoom.disable();
 
 
 function closeAddLandmark() {
-    addLandModal.style.display = 'none';
-    // landmarkName.value = '';
-    // latitude.value = '';
-    // longitude.value = '';
-    // covArea.value = '';
+    if(updated) {
+        addLandModal.style.display = 'none';
+        epLoader.style.display = 'block';
+        window.location.href = '/routes/manage/'.concat(routeID);
+    } else {
+        addLandModal.style.display = 'none';
+        landmarkName.value = '';
+        lat.value = '';
+        lng.value = '';
+    }
 }
 
 function clickOutside(e) {
     if(e.target == addLandModal){
-        addLandModal.style.display = 'none';
-    //     landmarkName.value = '';
-    //     latitude.value = '';
-    //     longitude.value = '';
-    //     covArea.value = '';
-    // }
+        if(updated) {
+            addLandModal.style.display = 'none';
+            epLoader.style.display = 'block';
+            window.location.href = '/routes/manage/'.concat(routeID);
+        } else {
+            addLandModal.style.display = 'none';
+            landmarkName.value = '';
+            lat.value = '';
+            lng.value = '';
+        }
     }
 }
 
@@ -103,6 +115,10 @@ function saveToFirebase() {
                     sleep(2000).then(() => {
                         done.style.display = 'none';
                       });
+                    lat.value = "";
+                    lng.value = "";
+                    landmarkName.value = "";
+                    updated = true;
                 },error:function(data) {
                     alert('Please');
                 }
@@ -148,12 +164,15 @@ function coverageSelected(id) {
 
 var listener = L.featureGroup().addTo(mapAddLand);
 mapAddLand.on("click", function(event) {
+    markerLayerMap.clearLayers();
     var latitude = event.latlng.lat;
     var longitude = event.latlng.lng;
     if(selectedCovBbox != null) {
         if(latitude >= selectedCovBbox[1] && latitude <= selectedCovBbox[3] && longitude >= selectedCovBbox[0] && longitude <= selectedCovBbox[2]) {
             lat.value = latitude;
             lng.value = longitude;
+            L.marker([latitude, longitude]).addTo(markerLayerMap);
+
         } else {
             alert("Clicked location is out the coverage BBOX");
             lat.value = "";

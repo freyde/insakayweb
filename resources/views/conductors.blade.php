@@ -28,7 +28,7 @@
 <table class="table">
   <thead>
       <tr align="center">
-          <th>No Conductors Found</th>
+          <th>No Registered Conductor</th>
       </tr>
   </thead>
 </table>

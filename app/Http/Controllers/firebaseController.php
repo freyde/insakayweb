@@ -13,8 +13,11 @@ use Illuminate\Http\Request;
 class firebaseController extends Controller {
 
     public function homeManager() {
-        if(session()->get('uid') == null) {
+        $uid = session()->get('uid');
+        if( $uid == null) {
             return view('login');
+        } else if($uid == 'kNZ24FppcNS7o8fp2lev7b7zIet1') {
+            return view('err403');
         } else {
             $serviceAccount = ServiceAccount::fromJsonFile(__DIR__.'/insakay-198614-firebase-adminsdk-mrk72-6083723cf0.json');
             $firebase = (new Factory)
@@ -26,15 +29,6 @@ class firebaseController extends Controller {
             $opName = $database->getReference('users/' . $uid .'//info/operatorName')->getSnapshot()->getValue();
             
             return view('/controlPanel')->with('uid', $uid)->with('opName', $opName);
-        }
-    }
-
-    public function adminHomeManager() {
-        $uid = session()->get('uid');
-        if($uid == 'kNZ24FppcNS7o8fp2lev7b7zIet1') {
-            return view('admincontrolpanel')->with('uid', $uid);
-        } else {
-            return view('/admin');
         }
     }
     
@@ -83,8 +77,11 @@ class firebaseController extends Controller {
     }
 
     public function listConductors() {
-        if(session()->get('uid') == null) {
+        $uid = session()->get('uid');
+        if( $uid == null) {
             return view('login');
+        } else if($uid == 'kNZ24FppcNS7o8fp2lev7b7zIet1') {
+            return view('err403');
         } else {
             $serviceAccount = ServiceAccount::fromJsonFile(__DIR__.'/insakay-198614-firebase-adminsdk-mrk72-6083723cf0.json');
             $firebase = (new Factory)
@@ -94,8 +91,6 @@ class firebaseController extends Controller {
 
             $uid = session()->get('uid');
             $array = $database->getReference('users/' . $uid .'/conductors')->getSnapshot()->getValue();
-            $count = count($array);
-
             $opName = $database->getReference('users/' . $uid .'//info/operatorName')->getSnapshot()->getValue();
     
             return view('conductors')->with('conductors', $array)->with('uid', $uid)->with('opName', $opName);
@@ -103,8 +98,11 @@ class firebaseController extends Controller {
     }
 
     public function listBuses() {
-        if(session()->get('uid') == null) {
+        $uid = session()->get('uid');
+        if( $uid == null) {
             return view('login');
+        } else if($uid == 'kNZ24FppcNS7o8fp2lev7b7zIet1') {
+            return view('err403');
         } else {
             $serviceAccount = ServiceAccount::fromJsonFile(__DIR__.'/insakay-198614-firebase-adminsdk-mrk72-6083723cf0.json');
             $firebase = (new Factory)
@@ -114,8 +112,6 @@ class firebaseController extends Controller {
 
             $uid = session()->get('uid');
             $array = $database->getReference('users/' . $uid .'/buses')->getSnapshot()->getValue();
-            $count = count($array);
-
             $opName = $database->getReference('users/' . $uid .'//info/operatorName')->getSnapshot()->getValue();
 
             return view('buses')->with('buses', $array)->with('uid', $uid)->with('opName', $opName);
@@ -123,8 +119,11 @@ class firebaseController extends Controller {
     }
 
     public function addConductor(Request $request) {
-        if(session()->get('uid') == null) {
+        $uid = session()->get('uid');
+        if( $uid == null) {
             return view('login');
+        } else if($uid == 'kNZ24FppcNS7o8fp2lev7b7zIet1') {
+            return view('err403');
         } else {
             $vars = $request->all();
             $alert = response()->json(['success' => 'Success!']);
@@ -160,8 +159,11 @@ class firebaseController extends Controller {
     }
 
     public function addBus(Request $request) {
-        if(session()->get('uid') == null) {
+        $uid = session()->get('uid');
+        if( $uid == null) {
             return view('login');
+        } else if($uid == 'kNZ24FppcNS7o8fp2lev7b7zIet1') {
+            return view('err403');
         } else {
             $vars = $request->all();
             $alert = response()->json(['success' => 'Success!']);
@@ -195,36 +197,40 @@ class firebaseController extends Controller {
     }
 
     public function displayRoutes() {
-        if(session()->get('uid') == null) {
+        $uid = session()->get('uid');
+        if( $uid == null) {
             return view('login');
+        } else if($uid == 'kNZ24FppcNS7o8fp2lev7b7zIet1') {
+            return view('err403');
         } else {
             $serviceAccount = ServiceAccount::fromJsonFile(__DIR__.'/insakay-198614-firebase-adminsdk-mrk72-6083723cf0.json');
             $firebase = (new Factory)
                 ->withServiceAccount($serviceAccount)
                 ->create();
             $database = $firebase->getDatabase();
+
             $uid = session()->get('uid');
-
             $routes = $database->getReference('users/' . $uid .'/routes')->getSnapshot()->getValue();
-            $count = count($routes);
-
             $opName = $database->getReference('users/' . $uid .'//info/operatorName')->getSnapshot()->getValue();
 
-            return view('route')->with('routes', $routes)->with('count', $count)->with('uid', $uid)->with('opName', $opName);
+            return view('route')->with('routes', $routes)->with('uid', $uid)->with('opName', $opName);
         }
     }
 
     function viewAddRoute() {
-        if(session()->get('uid') == null) {
+        $uid = session()->get('uid');
+        if( $uid == null) {
             return view('login');
+        } else if($uid == 'kNZ24FppcNS7o8fp2lev7b7zIet1') {
+            return view('err403');
         } else {
             $serviceAccount = ServiceAccount::fromJsonFile(__DIR__.'/insakay-198614-firebase-adminsdk-mrk72-6083723cf0.json');
             $firebase = (new Factory)
                 ->withServiceAccount($serviceAccount)
                 ->create();
             $database = $firebase->getDatabase();
-            $uid = session()->get('uid');
 
+            $uid = session()->get('uid');
             $opName = $database->getReference('users/' . $uid .'//info/operatorName')->getSnapshot()->getValue();
 
             return view('addRoute')->with('uid', $uid)->with('opName', $opName);
@@ -232,8 +238,11 @@ class firebaseController extends Controller {
     }
 
     function addRoute(Request $request) {
-        if(session()->get('uid') == null) {
+        $uid = session()->get('uid');
+        if( $uid == null) {
             return view('login');
+        } else if($uid == 'kNZ24FppcNS7o8fp2lev7b7zIet1') {
+            return view('err403');
         } else {
             $serviceAccount = ServiceAccount::fromJsonFile(__DIR__.'/insakay-198614-firebase-adminsdk-mrk72-6083723cf0.json');
             $firebase = (new Factory)
@@ -270,8 +279,11 @@ class firebaseController extends Controller {
     }
 
     public function manageRoute($routeid) {
-        if(session()->get('uid') == null) {
+        $uid = session()->get('uid');
+        if( $uid == null) {
             return view('login');
+        } else if($uid == 'kNZ24FppcNS7o8fp2lev7b7zIet1') {
+            return view('err403');
         } else {
             $serviceAccount = ServiceAccount::fromJsonFile(__DIR__.'/insakay-198614-firebase-adminsdk-mrk72-6083723cf0.json');
             $firebase = (new Factory)
@@ -289,14 +301,17 @@ class firebaseController extends Controller {
 
             $landmarks = $database->getReference('users/'. $uid .'//landmarks/'. $routeid)->getSnapshot()->getValue();
             $opName = $database->getReference('users/' . $uid .'//info/operatorName')->getSnapshot()->getValue();
-            // print_r($routes2);
+
             return view('manageRoute')->with('infos', $infos)->with('landmarks', $landmarks)->with('uid', $uid)->with('routeID', $routeid)->with('opName', $opName);
         }
     }
 
     public function addEndPoint(Request $request) {
-        if(session()->get('uid') == null) {
+        $uid = session()->get('uid');
+        if( $uid == null) {
             return view('login');
+        } else if($uid == 'kNZ24FppcNS7o8fp2lev7b7zIet1') {
+            return view('err403');
         } else {
             $alert = response()->json(['result' => 'Success!']);
             $serviceAccount = ServiceAccount::fromJsonFile(__DIR__.'/insakay-198614-firebase-adminsdk-mrk72-6083723cf0.json');
@@ -340,8 +355,11 @@ class firebaseController extends Controller {
     }
 
     public function addLandmark(Request $request) {
-        if(session()->get('uid') == null) {
+        $uid = session()->get('uid');
+        if( $uid == null) {
             return view('login');
+        } else if($uid == 'kNZ24FppcNS7o8fp2lev7b7zIet1') {
+            return view('err403');
         } else {
             $alert = response()->json(['success' => 'Success!']);
             $serviceAccount = ServiceAccount::fromJsonFile(__DIR__.'/insakay-198614-firebase-adminsdk-mrk72-6083723cf0.json');
@@ -389,8 +407,11 @@ class firebaseController extends Controller {
     }
 
     public function viewFare() {
-        if(session()->get('uid') == null) {
+        $uid = session()->get('uid');
+        if( $uid == null) {
             return view('login');
+        } else if($uid == 'kNZ24FppcNS7o8fp2lev7b7zIet1') {
+            return view('err403');
         } else {
             $serviceAccount = ServiceAccount::fromJsonFile(__DIR__.'/insakay-198614-firebase-adminsdk-mrk72-6083723cf0.json');
             $firebase = (new Factory)
@@ -399,18 +420,19 @@ class firebaseController extends Controller {
             $database = $firebase->getDatabase();
 
             $uid = session()->get('uid');
-
             $routes = $database->getReference('users/'. $uid .'/routes')->getSnapshot()->getValue();
-
             $opName = $database->getReference('users/' . $uid .'//info/operatorName')->getSnapshot()->getValue();
-            // print_r($routes);
+
             return view('fare')->with('routes', $routes)->with('uid', $uid)->with('opName', $opName);
         }
     }
 
     public function manageFare($routeID) {
-        if(session()->get('uid') == null) {
+        $uid = session()->get('uid');
+        if( $uid == null) {
             return view('login');
+        } else if($uid == 'kNZ24FppcNS7o8fp2lev7b7zIet1') {
+            return view('err403');
         } else {
             $serviceAccount = ServiceAccount::fromJsonFile(__DIR__.'/insakay-198614-firebase-adminsdk-mrk72-6083723cf0.json');
             $firebase = (new Factory)
@@ -419,7 +441,6 @@ class firebaseController extends Controller {
             $database = $firebase->getDatabase();
 
             $uid = session()->get('uid');
-
             $routes = $database->getReference('users/'. $uid .'/routes')->getSnapshot()->getValue();
 
             foreach($routes as $route) {
@@ -450,8 +471,11 @@ class firebaseController extends Controller {
     }
 
     public function saveFareMatrix(Request $request) {
-        if(session()->get('uid') == null) {
+        $uid = session()->get('uid');
+        if( $uid == null) {
             return view('login');
+        } else if($uid == 'kNZ24FppcNS7o8fp2lev7b7zIet1') {
+            return view('err403');
         } else {
             $serviceAccount = ServiceAccount::fromJsonFile(__DIR__.'/insakay-198614-firebase-adminsdk-mrk72-6083723cf0.json');
             $firebase = (new Factory)
@@ -470,19 +494,25 @@ class firebaseController extends Controller {
     }
 
     public function viewReports() {
-        if(session()->get('uid') == null) {
+        $uid = session()->get('uid');
+        if( $uid == null) {
             return view('login');
+        } else if($uid == 'kNZ24FppcNS7o8fp2lev7b7zIet1') {
+            return view('err403');
         } else {
             $serviceAccount = ServiceAccount::fromJsonFile(__DIR__.'/insakay-198614-firebase-adminsdk-mrk72-6083723cf0.json');
             $firebase = (new Factory)
                 ->withServiceAccount($serviceAccount)
                 ->create();
             $database = $firebase->getDatabase();
+
             $uid = session()->get('uid');
             $opName = $database->getReference('users/' . $uid .'//info/operatorName')->getSnapshot()->getValue();
 
             $reports = $database->getReference('users/' . $uid .'/reports')->getSnapshot()->getValue();
-            $keys = $database->getReference('users/' . $uid .'/reports')->getChildKeys();
+            $keys = "";
+            if($reports != null)
+                $keys = $database->getReference('users/' . $uid .'/reports')->getChildKeys();
 
             return view('reports')->with('uid', $uid)->with('opName', $opName)->with('keys', $keys)->with('reports', $reports);
         }

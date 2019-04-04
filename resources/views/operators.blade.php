@@ -1,16 +1,44 @@
 @extends('layout.adminnav')
 @section('content')
 
-<body>
-<ol class="breadcrumb">
-<h5>Welcome {{ $uid }} </h5>
-  <li class="breadcrumb-item"><a href="/admin/operators">Operators</a></li>
-</ol>
-<div class="content">
-<input type="button" class="btn btn-secondary" value="＋Operator" id="addOp">
+<h3 class="font-weight-bolder  ml-3 mt-3">Operators List</h3>
+<input type="button" class="btn btn-primary float-right mb-2" value="＋Operator" id="addOp">
 </div>
 
-<div class="modal" id="addOpModal">
+<div class="main-container p-3">
+<table class="table table-hover ml-3" style="width: 85%">
+@if(count($operators) > 1)
+    <thead>
+    <tr>
+        <th scope="col">Email Address</th>
+        <th scope="col">User ID</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach($operators as $operator)
+        <tr>
+          @if($operator[0]['uid'] != 'kNZ24FppcNS7o8fp2lev7b7zIet1') 
+            <td>{{ $operator[0]['email'] }}</td>
+            <td>{{ $operator[0]['uid'] }}</td>
+            <form action="{{URL::to('/admin/manage/'. $operator[0]['uid'])}}" method="get">
+            <td><input type="submit" class="btn btn-success" value="Manage"></input></td>
+            </form>
+          @endif
+        </tr>  
+    @endforeach
+    </tbody>
+@else
+    <thead>
+        <tr align="center">
+            <th>No Operators Found</th>
+        </tr>
+    </thead>
+@endif
+</table>
+</div>
+
+<div class="modal modal-backdrop" id="addOpModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -51,45 +79,13 @@
   </div>
 </div>
 
-<div class="main-container">
-@if($operators != null)
-<table class="table table-hover">
-  <thead>
-  <tr>
-      <th scope="col">Email Address</th>
-      <th scope="col">User ID</th>
-      <th></th>
-  </tr>
-  </thead>
-  <tbody>
-  @foreach($operators as $operator)
-      <tr>
-        @if($operator[0]['uid'] != 'kNZ24FppcNS7o8fp2lev7b7zIet1') 
-          <td>{{ $operator[0]['email'] }}</td>
-          <td>{{ $operator[0]['uid'] }}</td>
-          <form action="{{URL::to('/admin/manage/'. $operator[0]['uid'])}}" method="get">
-          <td><input type="submit" class="btn btn-success" value="Manage"></input></td>
-          </form>
-        @endif
-      </tr>  
-  @endforeach
-  </tbody>
-</table> 
-else
-<table class="table">
-  <thead>
-      <tr align="center">
-          <th>No Operators Found</th>
-      </tr>
-  </thead>
-</table>
-@endif
+<div class="modal modal-backdrop" id="loader">
+  <div class="spinner-border text-primary mx-auto fixed-top" style="margin-top: 13%; display: block"></div>
 </div>
 
 
-<script type="text/javascript" src="{{URL::asset('js/index.js')}}"></script>
+<!-- <script type="text/javascript" src="{{URL::asset('js/index.js')}}"></script> -->
 <script type="text/javascript" src="{{URL::asset('js/firebase.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('js/operator.js')}}"></script>
 @stop
-</body>
 </html>
