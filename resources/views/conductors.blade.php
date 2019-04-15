@@ -2,7 +2,7 @@
 @section('content')
 
 <h3 class="font-weight-bolder  ml-3 mt-3">Conductors List</h3>
-<input type="button" class="btn btn-primary float-right mb-2 mr-3" value="＋Conductor" id="addCond">
+<input type="button" class="btn btn-primary float-right mb-2 mr-3" value="Register Conductor" id="addCond">
 <div class="main-container p-3">
 @if($conductors != null)
 <table class="table">
@@ -60,7 +60,7 @@
         <input type="hidden" name="_token" value="{{ Session::token() }}">
       </div>
       <div class="modal-footer">
-        <button id="addConductor" type="button" class="btn btn-primary">Add</button>
+        <button id="addConductor" type="button" class="btn btn-primary">Register</button>
         <button id="addCondClose" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
       </div>
     </div>

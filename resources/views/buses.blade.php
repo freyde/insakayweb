@@ -2,7 +2,7 @@
 @section('content')
 
 <h3 class="font-weight-bolder ml-3 mt-3">Buses List</h3>
-<input type="submit" class="btn btn-primary float-right mb-2 mr-3" value="＋Bus" id="addBs">
+<input type="submit" class="btn btn-primary float-right mb-2 mr-3" value="Register Bus" id="addBs">
 
 <div class="main-container p-3">
 @if($buses != null)
@@ -54,7 +54,7 @@
         <input class="form-control form-control-sm" type="text" placeholder="Registered Plate Number" id="pNumber">
       </div>
       <div class="modal-footer">
-        <button id="addBus" type="button" class="btn btn-primary">Add</button>
+        <button id="addBus" type="button" class="btn btn-primary">Register</button>
         <button id="addBusClose" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
       </div>
     </div>

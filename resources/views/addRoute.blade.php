@@ -12,12 +12,12 @@
       <label class="col-form-label col-form-label-sm" for="inputSmall">Route Name</label>
       <input class="form-control form-control-sm" type="text" placeholder="" id="routeName"></input>
       <hr>
-      <label class="col-form-label col-form-label-sm" for="inputSmall">Coverage</label>
+      <label class="font-weight-bold" for="inputSmall">Coverage</label>
       <table id="coverage">
         <thead>
           <tr>
             <th class="w-100">
-            <input class="btn btn-success p-1" type="button" id="addRow" value="add">
+            <input class="btn btn-success p-1" type="button" id="addRow" value="Add Coverage">
             </th>
           </tr>
         </thead>

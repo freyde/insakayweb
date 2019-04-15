@@ -119,6 +119,7 @@ function saveToFirebase() {
                     lng.value = "";
                     landmarkName.value = "";
                     updated = true;
+                    addLandClose.value = "Done";
                 },error:function(data) {
                     alert('Please');
                 }
@@ -299,7 +300,7 @@ ep1Done.onclick = function () {
             }
         });
     } else {
-        alert("Please select a landmark!");
+        alert("Please select a coverage!");
     }
 }
 
@@ -327,7 +328,7 @@ ep2Done.onclick = function () {
             }
         });
     } else {
-        alert("Please select a landmark!");
+        alert("Please select a coverage!");
     }
 }
 

@@ -124,7 +124,7 @@
               <input class="form-control form-control-sm" type="text" placeholder="Latitude" id="lmarkLat" readonly="true"></input>
               <input class="form-control form-control-sm" type="text" placeholder="Longitude" id="lmarkLng" readonly="true"></input>
               <br>
-              <button id="addLandClose" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <input id="addLandClose" type="button" class="btn btn-secondary" data-dismiss="modal" value="Cancel">
               <button id="addLandmark" type="button" class="btn btn-primary">Add Landmark</button>
               <div id="loader" class="float-right mt-1 mr-5" style="display:none">
                 <div class="spinner-border spinner-border-sm text-primary"></div>
