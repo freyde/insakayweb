@@ -16,7 +16,8 @@ firebase.initializeApp(config);
 
 
 var table = document.getElementById('matrix');
-
+var load = document.getElementById('matrixLoader');
+load.style.display = 'block';
 var uid = document.getElementById('uid').value;
 var routeID = document.getElementById('routeID').value;
 var save = document.getElementById('saveMatrix');
@@ -108,6 +109,7 @@ firebase.database().ref('users/' + uid + '/routes')
             blank.appendChild(put);
         }
     }
+    load.style.display = 'none';
 });
 
 console.log(len);
@@ -128,6 +130,7 @@ save.onclick = function() {
     }
 
     if(ok) {
+        load.style.display = 'block';
         fareObject = {};
         for(b = 0; b < sortedCoverage.length; b++) {
             // var temp = { [sortedCoverage[b]] : []};
@@ -141,7 +144,6 @@ save.onclick = function() {
             }
         }
         console.log(fareObject);
-
         $.ajax ({
             url: "/fare/savematrix",
             type: "POST",
@@ -150,7 +152,7 @@ save.onclick = function() {
               list : fareObject,
             },
             success:function(data) {
-                console.log("Still FINE!")
+                window.location.href = "/fare/manage/".concat(routeID);
             },error:function(data) {
                 console.log("There is an error.");
             }

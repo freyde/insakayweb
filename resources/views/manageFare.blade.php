@@ -11,8 +11,7 @@
     <thead>
     </thead>
     <tbody>
-@if($haveFare)
-    
+    @if($haveFare)
         <tr>
             <td></td>
             @foreach($fareKeys as $key)
@@ -29,21 +28,21 @@
             </tr>
             @endforeach
         @endforeach
-    
-
-<script type="text/javascript" src="{{URL::asset('js/havefare.js')}}"></script>
-@else
-    
-<button id="saveMatrix" type="button" class="btn btn-primary" style="float: right; margin: 3rem">Save</button>
-@endif
-</tbody>
+    <script type="text/javascript" src="{{URL::asset('js/havefare.js')}}"></script>
+    @endif
+    </tbody>
 </table>
-
 </div>
 
 @if($haveFare)
 
 @else
+<button id="saveMatrix" type="button" class="btn btn-primary" style="float: right; margin: 3rem">Save</button>
+<div class="modal modal-backdrop" id="matrixLoader">
+  <div class="spinner-border text-primary mx-auto fixed-top" style="margin-top: 30%"></div>
+  <div class="modal-dialog"></div>
+</div>
+
 <script type="text/javascript" src="{{URL::asset('js/fare.js')}}"></script>
 @endif
 @stop

@@ -55,7 +55,11 @@ firebase.database().ref('onOperation')
                     var info = snapshot.val();
                     console.log(info.lat);
                     var marker = L.marker([info.lat, info.long]).addTo(markers);
-                    marker.bindPopup(conductor);
+                    marker.bindPopup(
+                        "<b>Plate No.:</b> ".concat(info.busPlate).concat(
+                        "<br><b>Driver:</b> ".concat(info.busDriver).concat(
+                        "<br><b>Conductor:</b> ".concat(info.conductorName)))
+                    );
                 });
                 
             }
