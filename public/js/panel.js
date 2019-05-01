@@ -53,12 +53,16 @@ firebase.database().ref('onOperation')
                 .once("value")
                 .then(function(snapshot) {
                     var info = snapshot.val();
-                    console.log(info.lat);
+                    var time = info.time;
+                    console.log(time.replace("_", "-"));
+                    console.log(new Date(time.replace(/_/g, "-")));
+                    
                     var marker = L.marker([info.lat, info.long]).addTo(markers);
                     marker.bindPopup(
                         "<b>Plate No.:</b> ".concat(info.busPlate).concat(
                         "<br><b>Driver:</b> ".concat(info.busDriver).concat(
-                        "<br><b>Conductor:</b> ".concat(info.conductorName)))
+                        "<br><b>Conductor:</b> ".concat(info.conductorName).concat(
+                        "<br><b>Last Update Time:</b> ".concat(new Date(time.replace(/_/g, "-"))))))
                     );
                 });
                 
