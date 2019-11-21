@@ -45,7 +45,7 @@ mapMain.scrollWheelZoom.disable();
 
 span.onclick = function() {
   modal.style.display = "none";
-  mapMainView.style.display = 'block';
+  // mapMainView.style.display = 'block';
   resultView.innerHTML = "";
   box.value = "";
   highlightLayerMapAdd.clearLayers();
@@ -54,7 +54,7 @@ span.onclick = function() {
 
 close.onclick = function() {
   modal.style.display = "none";
-  mapMainView.style.display = 'block';
+  // mapMainView.style.display = 'block';
   resultView.innerHTML = "";
   box.value = "";
   highlightLayerMapAdd.clearLayers();
@@ -64,7 +64,7 @@ close.onclick = function() {
 window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
-    mapMainView.style.display = 'block';
+    // mapMainView.style.display = 'block';
     resultView.innerHTML = "";
     box.value = "";
     highlightLayerMapAdd.clearLayers();
@@ -195,7 +195,7 @@ searchButton.onclick = function() {
             head.appendChild(headTitle);
             headRow.appendChild(head);
           }
-  
+          console.log(results);
           for(var a = 0; a < results.length; a++) {
             
             var cell = resultView.insertRow(-1);

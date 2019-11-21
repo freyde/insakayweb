@@ -23,6 +23,20 @@ firebase.database().ref('users/' + uid + '/routes').once("value").then(function(
     Object.values(snap).forEach(function (route) {
         if(route.routeID == routeID) {
             coverages = route.coverage;
+            // var waypoints = [];
+            // Object.values(coverages).forEach(function (cov) {
+            //     var a = cov.coordinate;
+            //     waypoints.push(L.latLng(a[0], a[1]));
+            // });
+            // console.log(waypoints);
+
+            // L.Routing.control({
+            //     createMarker: function() { return null; },
+            //     waypoints: waypoints,
+            //     addWaypoints: false,
+            //     routeWhileDragging: false,
+            //     // show: false
+            // }).addTo(mapAddLand);
         } 
     }); 
 });
@@ -64,6 +78,52 @@ layerLandmark.addTo(mapAddLand);
 mapAddLand.setView([12.8797, 121.7740], 5);
 mapAddLand.scrollWheelZoom.disable();
 
+
+var ePt1Lat = document.getElementById('ep1Lat');
+var ePt1Long = document.getElementById('ep1Long');
+var ePt2Lat = document.getElementById('ep2Lat');
+var ePt2Long = document.getElementById('ep2Long');
+
+// $.ajax ({
+//     url: "https://api.mapbox.com/directions/v5/mapbox/driving/"+ePt1Lat.value+","+ePt1Long.value+";"+ePt2Lat.value+","+ePt2Long.value+"?access_token=pk.eyJ1IjoiZnJleWRlIiwiYSI6ImNqdDZ2eWF6azBsajI0NG05emk2dnlzcGUifQ.yD_bma0GaPOkG3ZuHyQV_w",
+//     type: "GET"
+//     ,success:function(data) {
+//         console.log(data);
+
+//     },error:function() {
+//         console.log("Failed")
+//     }
+// });
+
+// $.ajax ({
+//     url: "https://api.mapbox.com/directions/v5/mapbox/driving/14.2,120.88;14.28,120.89?access_token=pk.eyJ1IjoiZnJleWRlIiwiYSI6ImNqdDZ2eWF6azBsajI0NG05emk2dnlzcGUifQ.yD_bma0GaPOkG3ZuHyQV_w",
+//     type: "GET"
+//     ,success:function(data) {
+//         console.log(data);
+
+//     },error:function() {
+//         console.log("Failed")
+//     }
+// });
+
+// var waypoints = [];
+// Object.values(coverages).forEach(function (cov) {
+//     var a = cov.coordinate;
+//     waypoints.push(L.latLng(a[0], a[1]));
+// });
+// console.log(waypoints);
+if(ePt1Lat != null && ePt2Lat != null) {
+    L.Routing.control({
+        createMarker: function() { return null; },
+        waypoints: [
+            L.latLng(ePt1Lat.value, ePt1Long.value),
+            L.latLng(ePt2Lat.value, ePt2Long.value)
+        ],
+        addWaypoints: false,
+        routeWhileDragging: false,
+        // show: false
+    }).addTo(mapAddLand);
+}
 
 function closeAddLandmark() {
     if(updated) {
@@ -157,6 +217,8 @@ function coverageSelected(id) {
                 [selectedCovBbox[3], selectedCovBbox[0]],
             ]).addTo(areaLayerMap);
 
+            console.log("Tried")
+            
         }
     });
     var a = document.getElementById(id);
@@ -173,7 +235,7 @@ mapAddLand.on("click", function(event) {
             lat.value = latitude;
             lng.value = longitude;
             L.marker([latitude, longitude]).addTo(markerLayerMap);
-
+        
         } else {
             alert("Clicked location is out the coverage BBOX");
             lat.value = "";

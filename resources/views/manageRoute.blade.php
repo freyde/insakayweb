@@ -1,6 +1,13 @@
 @extends('layout.nav')
 @section('content')
 
+@if($ep1 != "" && $ep2 !="") 
+  <input type="hidden" id="ep1Lat" value="{{$ep1[0]}}">
+  <input type="hidden" id="ep1Long" value="{{$ep1[1]}}">
+  <input type="hidden" id="ep2Lat" value="{{$ep2[0]}}">
+  <input type="hidden" id="ep2Long" value="{{$ep2[1]}}">
+@endif
+
 <div class="main-container p3 ml-3 mt-3" style="height: 85%; overflow-y: scroll">
 <h3 class="font-weight-bolder">Route's Information</h3>
   <div>
@@ -218,3 +225,5 @@
 <!-- <script type="text/javascript" src="{{URL::asset('js/manageRoute.js')}}"></script> -->
 @stop
 </html>
+<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>

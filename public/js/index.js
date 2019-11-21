@@ -18,28 +18,33 @@ function login() {
     console.log("Login")
     var adminEmail = document.getElementById("email").value;
     var adminPass = document.getElementById("password").value;
-
-    firebase.auth().signInWithEmailAndPassword(adminEmail, adminPass).then(function() {
-        firebase.auth().onAuthStateChanged(function(user) {
-            if(user) {
-                var uid = user.uid;
-                sessionStorage.setItem('uid', uid);
-                $.ajax ({
-                    url: "/verify",
-                    type: "POST",
-                    data: { id : uid },
-                    success:function(data) {
-                        window.location.replace("/");
-                    }
-                });
-            }
-        })
-    }).catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        window.alert("Error: " + errorMessage + "\nCode: " + errorCode);
-    });
+    try {
+        firebase.auth().signInWithEmailAndPassword(adminEmail, adminPass).then(function() {
+            firebase.auth().onAuthStateChanged(function(user) {
+                if(user) {
+                    var uid = user.uid;
+                    sessionStorage.setItem('uid', uid);
+                    $.ajax ({
+                        url: "/verify",
+                        type: "POST",
+                        data: { id : uid },
+                        success:function(data) {
+                            window.location.replace("/");
+                        }
+                    });
+                }
+            })
+        }).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            window.alert("Error: " + errorMessage + "\nCode: " + errorCode);
+        });
+    } catch (error) {
+        console.log(error)
+        alert("We've encountered a problem. Please check your connection.");
+    }
+    
 }
 
 function adminlogin() {

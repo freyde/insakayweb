@@ -83,6 +83,7 @@ firebase.database().ref('users/' + uid + '/routes')
     }
     for(l = 0; l < covs.length; l++) {
         sortedCoverage[l] = covs[l].name;
+        console.log(sortedCoverage[l]);
     }
     len = sortedCoverage.length;
     // console.log(sortedCoverage);
@@ -104,6 +105,8 @@ firebase.database().ref('users/' + uid + '/routes')
             put.setAttribute('id', x +"-"+ y);
             put.setAttribute('placeholder', "Price");
             put.setAttribute('style', 'width: 6rem');
+            put.setAttribute('onkeypress', 'return isNumberKey(event)');
+            
             // put.setAttribute('value', "1");
             var blank = row.insertCell();
             blank.appendChild(put);
@@ -161,5 +164,14 @@ save.onclick = function() {
         alert("Missing value!")
     }
 
+}
+
+function isNumberKey(evt) {
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode != 46 && charCode > 31 
+    && (charCode < 48 || charCode > 57))
+        return false;
+
+    return true;
 }
 

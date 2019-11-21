@@ -11,11 +11,19 @@
     <link rel="stylesheet" href="{{URL::asset('leaflet/leaflet.css')}}" />
     <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
 
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+
     <script src='https://api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
     
     <!-- <script src="https://npmcdn.com/leaflet-geometryutil"></script> -->
     <script src="{{URL::asset('leaflet/leaflet.js')}}"></script>
+    <script src="{{URL::asset('routing/leaflet-routing-machine.js')}}"></script>
+    <script src="{{URL::asset('routing/leaflet-routing-machine.min.js')}}"></script>
+    <link rel="stylesheet" href="{{URL::asset('routing/leaflet-routing-machine.css')}}">
     
     <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase.js"></script>
     <script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>
